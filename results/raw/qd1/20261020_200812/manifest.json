@@ -1,0 +1,142 @@
+{
+  "experiment": "qd1",
+  "session": "20261020_200812",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Zero-queue baselines: 4 KiB random read/write and 128 KiB sequential read/write at QD=1.",
+  "hypothesis": "4 KiB random read ~50-100 us; writes look faster (acked from controller buffer).",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "sanity",
+      "qd1"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": false,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "sanity",
+    "qd1"
+  ],
+  "runs": [
+    {
+      "job": "randread_4k_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:13:12.023694",
+      "end": "2026-10-20T20:13:48.625571",
+      "returncode": 0,
+      "output": "randread_4k_qd1_r1.json"
+    },
+    {
+      "job": "seqread_128k_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:13:58.627291",
+      "end": "2026-10-20T20:14:35.266835",
+      "returncode": 0,
+      "output": "seqread_128k_qd1_r1.json"
+    },
+    {
+      "job": "randwrite_4k_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:14:45.268408",
+      "end": "2026-10-20T20:15:21.809738",
+      "returncode": 0,
+      "output": "randwrite_4k_qd1_r1.json"
+    },
+    {
+      "job": "seqwrite_128k_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:15:31.813122",
+      "end": "2026-10-20T20:16:08.312872",
+      "returncode": 0,
+      "output": "seqwrite_128k_qd1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:16:18.316035",
+      "end": "2026-10-20T20:16:54.854160",
+      "returncode": 0,
+      "output": "randread_4k_qd1_r2.json"
+    },
+    {
+      "job": "seqread_128k_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:17:04.857149",
+      "end": "2026-10-20T20:17:41.403146",
+      "returncode": 0,
+      "output": "seqread_128k_qd1_r2.json"
+    },
+    {
+      "job": "randwrite_4k_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:17:51.405902",
+      "end": "2026-10-20T20:18:27.918600",
+      "returncode": 0,
+      "output": "randwrite_4k_qd1_r2.json"
+    },
+    {
+      "job": "seqwrite_128k_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:18:37.921969",
+      "end": "2026-10-20T20:19:14.451363",
+      "returncode": 0,
+      "output": "seqwrite_128k_qd1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:19:24.454106",
+      "end": "2026-10-20T20:20:00.969617",
+      "returncode": 0,
+      "output": "randread_4k_qd1_r3.json"
+    },
+    {
+      "job": "seqread_128k_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:20:10.973824",
+      "end": "2026-10-20T20:20:47.505938",
+      "returncode": 0,
+      "output": "seqread_128k_qd1_r3.json"
+    },
+    {
+      "job": "randwrite_4k_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:20:57.508868",
+      "end": "2026-10-20T20:21:34.059617",
+      "returncode": 0,
+      "output": "randwrite_4k_qd1_r3.json"
+    },
+    {
+      "job": "seqwrite_128k_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:21:44.062619",
+      "end": "2026-10-20T20:22:20.650058",
+      "returncode": 0,
+      "output": "seqwrite_128k_qd1_r3.json"
+    }
+  ]
+}

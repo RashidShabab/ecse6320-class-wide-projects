@@ -1,0 +1,260 @@
+{
+  "experiment": "qd",
+  "session": "20261020_203435",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Queue-depth sweep 1-256 at fixed block size: throughput-vs-latency curve, knee, Little's Law.",
+  "hypothesis": "IOPS rises ~linearly at low QD, flattens at the knee; latency then grows ~linearly with QD.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "qd"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": false,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "qd"
+  ],
+  "runs": [
+    {
+      "job": "randread_4k_qd1_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:34:35.099775",
+      "end": "2026-10-20T20:35:11.640015",
+      "returncode": 0,
+      "output": "randread_4k_qd1_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd2_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:35:21.642478",
+      "end": "2026-10-20T20:35:58.178064",
+      "returncode": 0,
+      "output": "randread_4k_qd2_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:36:08.181492",
+      "end": "2026-10-20T20:36:44.725085",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd8_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:36:54.725955",
+      "end": "2026-10-20T20:37:31.274050",
+      "returncode": 0,
+      "output": "randread_4k_qd8_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:37:41.275229",
+      "end": "2026-10-20T20:38:17.811334",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:38:27.814015",
+      "end": "2026-10-20T20:39:04.345538",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:39:14.348740",
+      "end": "2026-10-20T20:39:50.884312",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:40:00.888011",
+      "end": "2026-10-20T20:40:37.435349",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd256_nj1",
+      "rep": 1,
+      "start": "2026-10-20T20:40:47.437026",
+      "end": "2026-10-20T20:41:23.980126",
+      "returncode": 0,
+      "output": "randread_4k_qd256_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd1_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:41:33.981853",
+      "end": "2026-10-20T20:42:10.530600",
+      "returncode": 0,
+      "output": "randread_4k_qd1_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd2_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:42:20.533568",
+      "end": "2026-10-20T20:42:57.067470",
+      "returncode": 0,
+      "output": "randread_4k_qd2_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:43:07.068529",
+      "end": "2026-10-20T20:43:43.612983",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd8_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:43:53.616412",
+      "end": "2026-10-20T20:44:30.133876",
+      "returncode": 0,
+      "output": "randread_4k_qd8_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:44:40.136982",
+      "end": "2026-10-20T20:45:16.670618",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:45:26.674268",
+      "end": "2026-10-20T20:46:03.212048",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:46:13.215496",
+      "end": "2026-10-20T20:46:49.753586",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:46:59.758454",
+      "end": "2026-10-20T20:47:36.297500",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd256_nj1",
+      "rep": 2,
+      "start": "2026-10-20T20:47:46.301354",
+      "end": "2026-10-20T20:48:22.861505",
+      "returncode": 0,
+      "output": "randread_4k_qd256_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd1_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:48:32.864722",
+      "end": "2026-10-20T20:49:09.379178",
+      "returncode": 0,
+      "output": "randread_4k_qd1_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd2_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:49:19.383173",
+      "end": "2026-10-20T20:49:55.922318",
+      "returncode": 0,
+      "output": "randread_4k_qd2_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:50:05.925264",
+      "end": "2026-10-20T20:50:42.484471",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd8_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:50:52.487619",
+      "end": "2026-10-20T20:51:29.020028",
+      "returncode": 0,
+      "output": "randread_4k_qd8_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:51:39.023441",
+      "end": "2026-10-20T20:52:15.515018",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:52:25.516803",
+      "end": "2026-10-20T20:53:02.063572",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:53:12.065402",
+      "end": "2026-10-20T20:53:48.731013",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:53:58.732081",
+      "end": "2026-10-20T20:54:35.388296",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd256_nj1",
+      "rep": 3,
+      "start": "2026-10-20T20:54:45.389842",
+      "end": "2026-10-20T20:55:22.060226",
+      "returncode": 0,
+      "output": "randread_4k_qd256_nj1_r3.json"
+    }
+  ]
+}

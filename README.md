@@ -9,9 +9,9 @@ Full environment: [`env/system_info.txt`](env/system_info.txt).
 |---|---|
 | `env/` | System info, CrystalDiskInfo screenshots |
 | `jobs/` | FIO job files, one per experiment, numbered in run order |
-| `scripts/` | `run_job.ps1` – runs a job N times, saves JSON + run log |
+| `scripts/` | `ssdbench.py` – runs/parses all experiments; `run_job.ps1` – runs a static job file N times |
 | `results/raw/` | FIO JSON output (never edited by hand) and `run_log.csv` |
-| `results/processed/` | `summary.csv` produced by the parser |
+| `results/processed/` | `summary.csv` (per run) and `summary_agg.csv` (mean ± std across reps) |
 | `analysis/` | `parse_fio.py` and plotting scripts |
 | `figures/` | Generated plots |
 | `report/` | Report draft and AI-use note |
@@ -19,6 +19,24 @@ Full environment: [`env/system_info.txt`](env/system_info.txt).
 The 64 GiB test file lives at `C:\fiotest\testfile`, outside the repo.
 
 ## How to reproduce
+
+### Recommended: `scripts/ssdbench.py`
+
+One script runs every experiment, saves the generated FIO job file, JSON result and a
+manifest (all knobs, fio version, timestamps) to `results/raw/<experiment>/<session>/`,
+and parses everything into CSVs. Run from WSL (it calls the Windows `fio.exe`, so the
+I/O itself is native Windows) or from Windows Python.
+
+```bash
+python3 scripts/ssdbench.py --help          # all commands
+python3 scripts/ssdbench.py run --help      # all knobs
+python3 scripts/ssdbench.py list            # experiments, hypotheses, time estimates
+python3 scripts/ssdbench.py run prep        # fill the test file once
+python3 scripts/ssdbench.py run all         # every experiment except prep and steady
+python3 scripts/ssdbench.py parse           # -> results/processed/summary.csv, summary_agg.csv
+```
+
+### Alternative: PowerShell runner for the static job files
 
 Windows PowerShell, from the repo root:
 

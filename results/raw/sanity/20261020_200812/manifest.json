@@ -1,0 +1,94 @@
+{
+  "experiment": "sanity",
+  "session": "20261020_200812",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Pitfall demo: 4 KiB random read QD=1 on a small region, direct vs buffered I/O.",
+  "hypothesis": "Buffered reads come from the OS page cache and look 10-100x faster than direct I/O.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "sanity",
+      "qd1"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": false,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "sanity",
+    "qd1"
+  ],
+  "runs": [
+    {
+      "job": "direct_4k_randread_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:08:12.358757",
+      "end": "2026-10-20T20:08:53.980379",
+      "returncode": 0,
+      "output": "direct_4k_randread_qd1_r1.json"
+    },
+    {
+      "job": "buffered_4k_randread_qd1",
+      "rep": 1,
+      "start": "2026-10-20T20:09:03.983662",
+      "end": "2026-10-20T20:09:45.587236",
+      "returncode": 0,
+      "output": "buffered_4k_randread_qd1_r1.json"
+    },
+    {
+      "job": "direct_4k_randread_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:09:55.590384",
+      "end": "2026-10-20T20:10:37.212843",
+      "returncode": 0,
+      "output": "direct_4k_randread_qd1_r2.json"
+    },
+    {
+      "job": "buffered_4k_randread_qd1",
+      "rep": 2,
+      "start": "2026-10-20T20:10:47.214175",
+      "end": "2026-10-20T20:11:28.829693",
+      "returncode": 0,
+      "output": "buffered_4k_randread_qd1_r2.json"
+    },
+    {
+      "job": "direct_4k_randread_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:11:38.832766",
+      "end": "2026-10-20T20:12:20.414945",
+      "returncode": 0,
+      "output": "direct_4k_randread_qd1_r3.json"
+    },
+    {
+      "job": "buffered_4k_randread_qd1",
+      "rep": 3,
+      "start": "2026-10-20T20:12:30.419833",
+      "end": "2026-10-20T20:13:12.023694",
+      "returncode": 0,
+      "output": "buffered_4k_randread_qd1_r3.json"
+    }
+  ]
+}

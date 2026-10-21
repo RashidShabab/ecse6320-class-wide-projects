@@ -40,6 +40,15 @@ def latest(rows, exp):
     return [r for r in rs if r["session"] == session]
 
 
+def sessions(rows, exp):
+    """[(suffix, rows)] for every session; untagged session -> '', tagged -> '_<tag>'."""
+    out = []
+    for s in sorted({r["session"] for r in rows if r["experiment"] == exp}):
+        tag = "_" + s[16:] if len(s) > 16 else ""
+        out.append((tag, [r for r in rows if r["experiment"] == exp and r["session"] == s]))
+    return out
+
+
 def fig(title, sub):
     f, ax = plt.subplots(figsize=(7.5, 4.8), dpi=150)
     ax.grid(True, color=GRID, linewidth=0.8)
@@ -112,11 +121,10 @@ def main():
         save(f, "bs_lat.png")
 
     # ---------------- mix ----------------
-    mix = latest(rows, "mix")
-    if mix:
+    for suffix, mix in sessions(rows, "mix"):
         mixes = sorted({int(r["rwmixread"]) for r in mix}, reverse=True)
         f, ax = fig("Total IOPS across read/write mixes",
-                    f"4 KiB random, direct I/O, QD {mix[0]['iodepth']}, numjobs 1, mean ± std of {mix[0]['n']} reps")
+                    f"4 KiB random, direct I/O, QD {mix[0]['iodepth']} × numjobs {mix[0]['numjobs']}, mean ± std of {mix[0]['n']} reps")
         xs = range(len(mixes))
         rd = [next((v(r, "iops", 1e3) for r in mix if int(r["rwmixread"]) == m and r["dir"] == "read"), (0, 0)) for m in mixes]
         wr = [next((v(r, "iops", 1e3) for r in mix if int(r["rwmixread"]) == m and r["dir"] == "write"), (0, 0)) for m in mixes]
@@ -126,21 +134,22 @@ def main():
         tot = [a + b for (a, _), (b, _) in zip(rd, wr)]
         err = [(sa ** 2 + sb ** 2) ** 0.5 for (_, sa), (_, sb) in zip(rd, wr)]
         ax.errorbar(xs, tot, yerr=err, fmt="none", ecolor=INK, capsize=4, linewidth=1)
-        for x, t in zip(xs, tot):
-            ax.text(x, t + max(err) + 3, f"{t:.0f}k", ha="center", fontsize=9, color=INK)
+        top = max(a + b for a, b in zip(tot, err))
+        for x, t, e in zip(xs, tot, err):
+            ax.text(x + 0.3, t, f"{t:.0f}k", ha="left", va="center", fontsize=9, color=INK)
         ax.set_xticks(list(xs), [f"{m}/{100 - m}" for m in mixes])
         ax.set_xlabel("Read / write mix (%)", color=INK)
         ax.set_ylabel("Throughput (kIOPS)", color=INK)
-        ax.set_ylim(0, max(tot) * 1.2)
+        ax.set_ylim(0, top * 1.08)
         ax.legend(frameon=False, fontsize=9, labelcolor=INK, loc="upper right")
-        save(f, "mix_iops.png")
+        save(f, f"mix_iops{suffix}.png")
 
     # ---------------- range ----------------
-    rng = [r for r in latest(rows, "range") if r["dir"] == "read"]
-    if rng:
+    for suffix, rng in sessions(rows, "range"):
+        rng = [r for r in rng if r["dir"] == "read"]
         rs = sorted(rng, key=lambda r: kib(r["size"]))
         x = [kib(r["size"]) / 1024 ** 2 for r in rs]
-        f, ax = fig("Latency is flat across the tested LBA ranges",
+        f, ax = fig("Latency is flat across the tested LBA ranges (1-64 GiB)",
                     f"4 KiB random read, direct I/O, QD {rs[0]['iodepth']}, numjobs 1, mean ± std of {rs[0]['n']} reps")
         for k, label, c in (("lat_mean_us", "Mean", C1), ("p99_us", "p99", C2)):
             y, e = zip(*[v(r, k) for r in rs])
@@ -151,7 +160,7 @@ def main():
         ax.set_xlabel("LBA range (working set)", color=INK)
         ax.set_ylabel("Latency (µs)", color=INK)
         ax.legend(frameon=False, fontsize=9, labelcolor=INK)
-        save(f, "range_lat.png")
+        save(f, f"range_lat{suffix}.png")
 
     # ---------------- tail ----------------
     tail = sorted([r for r in latest(rows, "tail") if r["dir"] == "read"], key=lambda r: int(r["iodepth"]))

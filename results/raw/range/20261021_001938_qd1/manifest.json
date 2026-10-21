@@ -1,0 +1,147 @@
+{
+  "experiment": "range",
+  "session": "20261021_001938",
+  "tag": "qd1",
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Working-set / LBA-range effect: same random read over 1G..64G regions.",
+  "hypothesis": "Small ranges fit the controller's mapping cache and show lower latency.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "range"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": true,
+    "bs": null,
+    "qd": [
+      1
+    ],
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": "qd1",
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "range",
+    "--qd",
+    "1",
+    "--shuffle",
+    "--tag",
+    "qd1"
+  ],
+  "runs": [
+    {
+      "job": "randread_4k_range1G_qd1",
+      "rep": 1,
+      "start": "2026-10-21T00:19:38.106435",
+      "end": "2026-10-21T00:20:14.716116",
+      "returncode": 0,
+      "output": "randread_4k_range1G_qd1_r1.json"
+    },
+    {
+      "job": "randread_4k_range64G_qd1",
+      "rep": 1,
+      "start": "2026-10-21T00:20:24.719534",
+      "end": "2026-10-21T00:21:01.268996",
+      "returncode": 0,
+      "output": "randread_4k_range64G_qd1_r1.json"
+    },
+    {
+      "job": "randread_4k_range16G_qd1",
+      "rep": 1,
+      "start": "2026-10-21T00:21:11.270600",
+      "end": "2026-10-21T00:21:47.813367",
+      "returncode": 0,
+      "output": "randread_4k_range16G_qd1_r1.json"
+    },
+    {
+      "job": "randread_4k_range4G_qd1",
+      "rep": 1,
+      "start": "2026-10-21T00:21:57.815432",
+      "end": "2026-10-21T00:22:34.369878",
+      "returncode": 0,
+      "output": "randread_4k_range4G_qd1_r1.json"
+    },
+    {
+      "job": "randread_4k_range4G_qd1",
+      "rep": 2,
+      "start": "2026-10-21T00:22:44.371832",
+      "end": "2026-10-21T00:23:20.905235",
+      "returncode": 0,
+      "output": "randread_4k_range4G_qd1_r2.json"
+    },
+    {
+      "job": "randread_4k_range16G_qd1",
+      "rep": 2,
+      "start": "2026-10-21T00:23:30.908318",
+      "end": "2026-10-21T00:24:07.774806",
+      "returncode": 0,
+      "output": "randread_4k_range16G_qd1_r2.json"
+    },
+    {
+      "job": "randread_4k_range64G_qd1",
+      "rep": 2,
+      "start": "2026-10-21T00:24:17.777936",
+      "end": "2026-10-21T00:24:54.336299",
+      "returncode": 0,
+      "output": "randread_4k_range64G_qd1_r2.json"
+    },
+    {
+      "job": "randread_4k_range1G_qd1",
+      "rep": 2,
+      "start": "2026-10-21T00:25:04.339684",
+      "end": "2026-10-21T00:25:40.853705",
+      "returncode": 0,
+      "output": "randread_4k_range1G_qd1_r2.json"
+    },
+    {
+      "job": "randread_4k_range16G_qd1",
+      "rep": 3,
+      "start": "2026-10-21T00:25:50.857190",
+      "end": "2026-10-21T00:26:27.364684",
+      "returncode": 0,
+      "output": "randread_4k_range16G_qd1_r3.json"
+    },
+    {
+      "job": "randread_4k_range1G_qd1",
+      "rep": 3,
+      "start": "2026-10-21T00:26:37.367687",
+      "end": "2026-10-21T00:27:13.891217",
+      "returncode": 0,
+      "output": "randread_4k_range1G_qd1_r3.json"
+    },
+    {
+      "job": "randread_4k_range4G_qd1",
+      "rep": 3,
+      "start": "2026-10-21T00:27:23.892245",
+      "end": "2026-10-21T00:28:00.442915",
+      "returncode": 0,
+      "output": "randread_4k_range4G_qd1_r3.json"
+    },
+    {
+      "job": "randread_4k_range64G_qd1",
+      "rep": 3,
+      "start": "2026-10-21T00:28:10.445918",
+      "end": "2026-10-21T00:28:46.958712",
+      "returncode": 0,
+      "output": "randread_4k_range64G_qd1_r3.json"
+    }
+  ]
+}

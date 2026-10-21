@@ -1,0 +1,264 @@
+fio: this platform does not support process shared mutexes, forcing use of threads. Use the 'thread' option to get rid of this warning.
+{
+  "fio version" : "fio-3.43",
+  "timestamp" : 1792552750,
+  "timestamp_ms" : 1792552750127,
+  "time" : "Tue Oct 20 23:19:10 2026",
+  "jobs" : [
+    {
+      "jobname" : "read_128k_qd32_nj1",
+      "groupid" : 0,
+      "job_start" : 1792552719741,
+      "error" : 0,
+      "eta" : 0,
+      "elapsed" : 37,
+      "job options" : {
+        "ioengine" : "windowsaio",
+        "direct" : "1",
+        "iodepth" : "32",
+        "size" : "64G",
+        "time_based" : "1",
+        "runtime" : "30",
+        "ramp_time" : "5",
+        "randrepeat" : "0",
+        "group_reporting" : "1",
+        "lat_percentiles" : "1",
+        "percentile_list" : "50:95:99:99.9",
+        "refill_buffers" : "1",
+        "buffer_compress_percentage" : "0",
+        "rw" : "read",
+        "bs" : "128k",
+        "numjobs" : "1",
+        "filename" : "C\\:\\fiotest\\testfile"
+      },
+      "read" : {
+        "io_bytes" : 178642747392,
+        "io_kbytes" : 174455808,
+        "bw_bytes" : 5954559761,
+        "bw" : 5814999,
+        "iops" : 45428.652378,
+        "runtime" : 30001,
+        "total_ios" : 1362905,
+        "short_ios" : 0,
+        "drop_ios" : 0,
+        "slat_ns" : {
+          "min" : 4433,
+          "max" : 764668,
+          "mean" : 7818.781875,
+          "stddev" : 3775.834779,
+          "N" : 1362905
+        },
+        "clat_ns" : {
+          "min" : 33920,
+          "max" : 4566025,
+          "mean" : 693623.035715,
+          "stddev" : 195287.866770,
+          "N" : 1362935,
+          "percentile" : {
+            "50.000000" : 593920,
+            "95.000000" : 1073152,
+            "99.000000" : 1318912,
+            "99.900000" : 1957888
+          }
+        },
+        "lat_ns" : {
+          "min" : 79905,
+          "max" : 4577105,
+          "mean" : 701441.819255,
+          "stddev" : 195008.159817,
+          "N" : 1362935,
+          "percentile" : {
+            "50.000000" : 602112,
+            "95.000000" : 1089536,
+            "99.000000" : 1318912,
+            "99.900000" : 1957888
+          }
+        },
+        "bw_min" : 4615424,
+        "bw_max" : 6982797,
+        "bw_agg" : 100.000000,
+        "bw_mean" : 5819804.283333,
+        "bw_dev" : 1037653.079764,
+        "bw_samples" : 60,
+        "iops_min" : 36058,
+        "iops_max" : 54553,
+        "iops_mean" : 45466.883333,
+        "iops_stddev" : 8106.659090,
+        "iops_samples" : 60
+      },
+      "write" : {
+        "io_bytes" : 0,
+        "io_kbytes" : 0,
+        "bw_bytes" : 0,
+        "bw" : 0,
+        "iops" : 0.000000,
+        "runtime" : 0,
+        "total_ios" : 0,
+        "short_ios" : 0,
+        "drop_ios" : 0,
+        "slat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "clat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "lat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "bw_min" : 0,
+        "bw_max" : 0,
+        "bw_agg" : 0.000000,
+        "bw_mean" : 0.000000,
+        "bw_dev" : 0.000000,
+        "bw_samples" : 0,
+        "iops_min" : 0,
+        "iops_max" : 0,
+        "iops_mean" : 0.000000,
+        "iops_stddev" : 0.000000,
+        "iops_samples" : 0
+      },
+      "trim" : {
+        "io_bytes" : 0,
+        "io_kbytes" : 0,
+        "bw_bytes" : 0,
+        "bw" : 0,
+        "iops" : 0.000000,
+        "runtime" : 0,
+        "total_ios" : 0,
+        "short_ios" : 0,
+        "drop_ios" : 0,
+        "slat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "clat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "lat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        },
+        "bw_min" : 0,
+        "bw_max" : 0,
+        "bw_agg" : 0.000000,
+        "bw_mean" : 0.000000,
+        "bw_dev" : 0.000000,
+        "bw_samples" : 0,
+        "iops_min" : 0,
+        "iops_max" : 0,
+        "iops_mean" : 0.000000,
+        "iops_stddev" : 0.000000,
+        "iops_samples" : 0
+      },
+      "sync" : {
+        "total_ios" : 0,
+        "lat_ns" : {
+          "min" : 0,
+          "max" : 0,
+          "mean" : 0.000000,
+          "stddev" : 0.000000,
+          "N" : 0
+        }
+      },
+      "job_runtime" : 30000,
+      "usr_cpu" : 3.333333,
+      "sys_cpu" : 43.333333,
+      "ctx" : 0,
+      "majf" : 0,
+      "minf" : 0,
+      "iodepth_level" : {
+        "1" : 0.000000,
+        "2" : 0.100000,
+        "4" : 0.100000,
+        "8" : 0.100000,
+        "16" : 24.311086,
+        "32" : 75.672993,
+        ">=64" : 0.000000
+      },
+      "iodepth_submit" : {
+        "0" : 0.000000,
+        "4" : 100.000000,
+        "8" : 0.000000,
+        "16" : 0.000000,
+        "32" : 0.000000,
+        "64" : 0.000000,
+        ">=64" : 0.000000
+      },
+      "iodepth_complete" : {
+        "0" : 0.000000,
+        "4" : 99.948752,
+        "8" : 0.100000,
+        "16" : 0.100000,
+        "32" : 0.100000,
+        "64" : 0.000000,
+        ">=64" : 0.000000
+      },
+      "latency_ns" : {
+        "2" : 0.000000,
+        "4" : 0.000000,
+        "10" : 0.000000,
+        "20" : 0.000000,
+        "50" : 0.000000,
+        "100" : 0.000000,
+        "250" : 0.000000,
+        "500" : 0.000000,
+        "750" : 0.000000,
+        "1000" : 0.000000
+      },
+      "latency_us" : {
+        "2" : 0.000000,
+        "4" : 0.000000,
+        "10" : 0.000000,
+        "20" : 0.000000,
+        "50" : 0.010000,
+        "100" : 0.010000,
+        "250" : 0.014308,
+        "500" : 1.393861,
+        "750" : 69.902451,
+        "1000" : 20.338542
+      },
+      "latency_ms" : {
+        "2" : 8.266974,
+        "4" : 0.081444,
+        "10" : 0.010000,
+        "20" : 0.000000,
+        "50" : 0.000000,
+        "100" : 0.000000,
+        "250" : 0.000000,
+        "500" : 0.000000,
+        "750" : 0.000000,
+        "1000" : 0.000000,
+        "2000" : 0.000000,
+        ">=2000" : 0.000000
+      },
+      "latency_depth" : 32,
+      "latency_target" : 0,
+      "latency_target_ns" : 0,
+      "latency_percentile" : 100.000000,
+      "latency_window" : 0,
+      "latency_window_us" : 0
+    }
+  ]
+}

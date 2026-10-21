@@ -1,0 +1,123 @@
+{
+  "experiment": "tail",
+  "session": "20261020_235259",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Tail latency (p50/p95/p99/p99.9) at mid QD and near-knee QD, longer runs.",
+  "hypothesis": "Near the knee p99/p99.9 grow much faster than p50 because of queueing.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "tail"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 120,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": true,
+    "bs": null,
+    "qd": [
+      4,
+      16,
+      64
+    ],
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "tail",
+    "--qd",
+    "4,16,64",
+    "--shuffle"
+  ],
+  "runs": [
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 1,
+      "start": "2026-10-20T23:52:59.168547",
+      "end": "2026-10-20T23:55:05.837323",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 1,
+      "start": "2026-10-20T23:55:15.839898",
+      "end": "2026-10-20T23:57:22.511439",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 1,
+      "start": "2026-10-20T23:57:32.515402",
+      "end": "2026-10-20T23:59:39.169401",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 2,
+      "start": "2026-10-20T23:59:49.172833",
+      "end": "2026-10-21T00:01:55.831988",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 2,
+      "start": "2026-10-21T00:02:05.833157",
+      "end": "2026-10-21T00:04:12.487374",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 2,
+      "start": "2026-10-21T00:04:22.492650",
+      "end": "2026-10-21T00:06:29.152047",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd16_nj1",
+      "rep": 3,
+      "start": "2026-10-21T00:06:39.153740",
+      "end": "2026-10-21T00:08:45.810279",
+      "returncode": 0,
+      "output": "randread_4k_qd16_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd64_nj1",
+      "rep": 3,
+      "start": "2026-10-21T00:08:55.811084",
+      "end": "2026-10-21T00:11:02.458832",
+      "returncode": 0,
+      "output": "randread_4k_qd64_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd4_nj1",
+      "rep": 3,
+      "start": "2026-10-21T00:11:12.461794",
+      "end": "2026-10-21T00:13:19.128349",
+      "returncode": 0,
+      "output": "randread_4k_qd4_nj1_r3.json"
+    }
+  ]
+}

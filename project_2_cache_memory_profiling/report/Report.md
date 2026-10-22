@@ -78,15 +78,17 @@ These were the main findings:
 
 ## 2. Grading rubric coverage
 
-| Rubric category (points) | Where it is covered |
-|---|---|
-| Zero-queue baselines (25) | §4: per-level table in ns and cycles with the measured clock, min–max over 10 runs, caveats |
-| Pattern / granularity / RW sweeps (35) | §6 (seq vs random × 64/256/1024 B, latency and bandwidth), §7 (four mixes, 1 and 16 threads) |
-| Throughput–latency knee (35) | §8: chain sweep (1–64), knee, diminishing returns, Little's Law, loaded latency |
-| Working-set / cache / TLB analysis (35) | §5 (staircase, AMAT), §9 (SAXPY counters vs runtime, correlations), §10 (dTLB counters, 4 KiB vs 2 MiB) |
-| Experimental rigor (25) | §3: pinning, warm-up, repetitions, in-process counters, self-validation, recorded environment, `membench.py` |
-| AI-use transparency and pitfall (15) | §11 (six pitfalls, each demonstrated with data), §16 (AI-use note) |
-| Report quality (15) | Figures with units and min–max bars, §12 anomalies, §13 limitations |
+The table below shows where each rubric requirement is covered and what evidence supports it.
+
+| Category | Rubric criteria | Where in this report | Evidence |
+|--------------|------------------|----------------|----------------------------------------------------|
+| Zero-queue baselines | Methodologically sound latency measurements with clear units and caveats | *Methodology*, *Zero-queue baselines* | Dependent random pointer chase, one load in flight, pinned to CPU 2; L1/L2/L3/DRAM table in cycles and ns with the measured clock per run; median and min–max of 10 runs; frequency-conversion caveat (ns vs cycles, two clock states) |
+| Pattern / granularity / RW sweeps | Complete and well-controlled bandwidth/latency comparisons | *Pattern and granularity sweep*, *Read/write mix sweep* | Sequential vs random × 64/256/1024 B at 1 GiB, latency and bandwidth for every cell; 100/70/50/0 % reads at 1 and 16 threads; Little's Law and read-for-ownership traffic estimates. Gap: latency under each read/write mix was not measured |
+| Throughput–latency knee | Clear knee identification, diminishing-return discussion, and Little's Law connection | *Intensity sweep: the knee and Little's Law* | 1–64 independent chains on one core with knee between 48 and 64 (gain per added chain table); loaded-latency sweep with 0–14 background cores and background bandwidth; Little's Law used to explain the curve, with independent cross-benchmark checks (random `bwbench` ≈ 7, random SAXPY ≈ 34 vs 32 chains) |
+| Working-set / cache / TLB analysis | Counters and performance correlation used correctly | *Working-set sweep*, *Cache-miss impact (SAXPY)*, *TLB-miss impact* | 37-size staircase with L1/L2/L3/DRAM regions annotated and AMAT hit-fraction estimates; SAXPY with L1D/L2/dTLB counters and Pearson r vs runtime; dTLB misses for 4 KiB vs 2 MiB pages; `perf stat` L2 hit check for the 4 MiB anomaly; counters read around the timed loop only. Gap: L3 (uncore) counters unavailable without root |
+| Experimental rigor | Pinning/isolation, repetitions, documented settings, and reproducible scripts | *Methodology*, *Reproducibility*, *Limitations* | Pinning to CPU 2 with idle SMT sibling; warm-up; 5–10 repetitions; shuffled point order; three working-set sessions agreeing within 0.09%; `membench.py` saving commands, `env.txt` and `manifest.json` per session; built-in validation of chains and SAXPY. Gap: governor and boost could not be fixed (no root) |
+| AI-use transparency and pitfall analysis | Honest AI-use note and meaningful benchmark-pitfall demonstration | *Benchmark pitfalls and misleading setups*, *Anomalies*, *AI-use note* | Six pitfalls each shown with data (sequential chase 81× too fast, THP hiding TLB misses, page-stride set conflicts, miss counters blind to prefetching, register-spill bug in AI-written code, ns under a changing clock); division of work; eight itemized AI errors |
+| Report quality | Readable plots, concise interpretation, and thoughtful limitations | All sections, *Limitations* | 10 figures with units, median and min–max bars and fixed-knob subtitles; hypothesis and outcome for every experiment; six anomalies discussed; limitations list; conclusion |
 
 ## 3. Methodology
 

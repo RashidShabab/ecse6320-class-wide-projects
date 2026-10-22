@@ -3,7 +3,7 @@
   figures/pattern_latency.png    seq vs rand latency at 64/256/1024 B stride (1 GiB)
   figures/pattern_bw.png         seq vs rand bandwidth at the same strides
   figures/rw_bw.png              bandwidth vs read share, 1 and 16 threads
-  figures/tlb_latency.png        latency per access, 4 KiB vs 2 MiB pages, one access per page
+  figures/tlb_latency.png        latency per access (cycles), 4 KiB vs 2 MiB pages, one access per page
   figures/tlb_misses.png         dTLB misses per access for the same runs
   results/processed/sanity.md    pitfall-demo table
 
@@ -85,7 +85,7 @@ def tlb():
         return print("no tlb results")
     labels = {"4k": "4 KiB pages", "huge": "2 MiB pages"}
     for key, ylabel, title, name in [
-            ("ns_per_load", "Latency per access (ns)", "TLB impact: latency, one access per 4 KiB page",
+            ("cycles_per_load", "Latency per access (core cycles)", "TLB impact: latency, one access per 4 KiB page",
              "tlb_latency.png"),
             ("dtlb_miss_per_load", "dTLB misses per access", "TLB impact: dTLB misses per access",
              "tlb_misses.png")]:

@@ -1,7 +1,6 @@
 """Intensity sweep (throughput vs latency, the knee) and Little's Law.
 
   figures/mlp_tradeoff.png   1 thread, k = 1..32 independent chains: bandwidth vs per-load latency
-  figures/mlp_littles.png    Little's Law: measured outstanding misses (bandwidth x latency / 64 B) vs k
   figures/loaded_latency.png latency of one chain vs background bandwidth from 0..14 other cores
 
 Usage: python3 analysis/plot_intensity.py   (latest session of each experiment)
@@ -33,18 +32,6 @@ def mlp():
     ax.set_ylim(bottom=0)
     save(fig, "mlp_tradeoff.png")
 
-    # Little's Law: L = throughput (lines/ns) x latency (ns)
-    L = [b * 1e9 / 64 * l * 1e-9 for b, l in zip(bw, lat)]
-    fig, ax = new("Little's Law check: outstanding misses vs chains", sub)
-    ax.plot(k, k, color=MUTED, linestyle="--", linewidth=1.5, label="Ideal: every chain has a miss in flight")
-    ax.plot(k, L, color=BLUE, linewidth=2, marker="o", markersize=6,
-            label="Measured L = bandwidth × latency / 64 B")
-    ax.set_xlabel("Independent chains k", color=INK)
-    ax.set_ylabel("Outstanding misses", color=INK)
-    ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
-    ax.legend(frameon=False, fontsize=9, labelcolor=INK)
-    save(fig, "mlp_littles.png")
 
 
 def loaded():

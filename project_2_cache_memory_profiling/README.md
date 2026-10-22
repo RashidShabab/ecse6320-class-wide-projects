@@ -8,11 +8,13 @@ Full environment: `env/` and the `env.txt` saved with every result session.
 
 ## Report
 
-- Report.pdf, Report.tex, Report.md: *to be added in `report/`*
+- [Report.pdf](report/Report.pdf)
+- [Report.tex](report/Report.tex) (LaTeX source)
+- [Report.md](report/Report.md) (Markdown)
 
 ## AI use
 
-- AI-use note: *to be added to the report*
+- [AI-use note](report/Report.md#16-ai-use-note)
 
 ## How to reproduce
 
@@ -41,15 +43,22 @@ Run long sessions inside `tmux`, with no other users on the machine (`who`, `upt
 
 ## Headline results
 
-*To be filled in after the runs.*
-
 | Metric | Result | Setting |
 |---|---|---|
-| L1 load-to-use latency | 4.0 cycles (0.92 ns at 4.37 GHz) — preliminary | 32 KiB, random chase, CPU 2 |
-| L2 / L3 / DRAM latency | | |
-| Single-thread / all-core DRAM bandwidth | | |
-| Knee (loads in flight) | | |
-| TLB penalty, 4 KiB vs 2 MiB pages | | |
+| L1 / L2 / L3 latency | 4.0 / 14.0 / 47.3 cycles | Random pointer chase, 32 KiB / 512 KiB / 16 MiB, CPU 2 |
+| DRAM latency | 97.9 ns (559 cycles at 5.71 GHz) | Random pointer chase, 1 GiB |
+| Effective L3 for one core | 32 MiB (one CCD), not 64 MiB | Working-set sweep, step at 32 → 40 MiB |
+| Single-core DRAM bandwidth | 54.1 GB/s sequential read, 4.3 GB/s random | 1 GiB, 1 thread |
+| Single-core knee | ~48 misses in flight, ~26 GB/s random; latency 99 → 159 ns at 64 chains | 1–64 independent chains |
+| Loaded latency | 101 ns idle → 423 ns with one streaming core (55 GB/s) | Probe on CPU 15 |
+| TLB (4 KiB pages) | Reach ~14 MiB; 42–64 cycles per miss | One access per page, 64 MiB–1 GiB |
+| SAXPY | 0.023 ns/elem (L1) → 0.27 (DRAM, 44.7 GB/s); random 22× slower in DRAM | 16 KiB–1 GiB |
+
+Main findings: the latency staircase steps exactly at 48 KiB, 1 MiB and 32 MiB; cache latency is fixed in cycles while the
+clock switched between 4.37 and 5.71 GHz. Near memory saturation a 15% rise in background bandwidth nearly tripled
+latency. Writes cost ~2× their bytes in DRAM traffic. Six benchmark pitfalls are demonstrated with data (sequential
+chase 81× too fast, THP hiding all TLB misses, page-stride set conflicts, miss counters blind to prefetching, a
+register-spill bug in AI-written code, ns comparisons under a changing clock).
 
 ## Test system
 
@@ -90,15 +99,15 @@ working set; repetitions are in-process.
 
 | Experiment | What it measures | Hypothesis | Outcome |
 |---|---|---|---|
-| `sanity` | Pitfalls: seq vs rand chase at 1 GiB; THP default vs forced 4 KiB pages, one access per page | Seq chase several × faster (prefetcher); THP default shows few dTLB misses | *pending* |
-| `baseline` | Zero-queue latency at 32 KiB / 512 KiB / 16 MiB / 1 GiB (L1/L2/L3/DRAM), 10 reps | L1 ~4 cycles, L2 ~14, L3 ~50, DRAM ~80–100 ns | *pending* (L1 4.0 cycles in first test) |
-| `ws` | Latency vs working set, 4 KiB–1 GiB, 37 sizes | Plateaus with steps past 48 KiB, 1 MiB, 32 MiB | *pending* |
-| `pattern` | Seq vs rand × 64/256/1024 B stride at 1 GiB: latency + 1-thread bandwidth | Seq ≫ rand at 64 B; gap shrinks as stride grows | *pending* |
-| `rw` | Bandwidth at 100/70/50/0 % reads, 1 and 16 threads | Bandwidth falls as write share rises | *pending* |
-| `mlp` | 1 thread, 1–64 independent chains at 1 GiB: bandwidth vs per-load latency | Linear rise, then knee at the core's miss-handling limit | *pending* |
-| `loaded` | One chain's latency while 0–14 other cores stream reads | Flat until near peak bandwidth, then sharp rise | *pending* |
-| `tlb` | One access per 4 KiB page, 4 MiB–1 GiB, 4 KiB vs 2 MiB pages, dTLB misses | 4 KiB pages: misses and latency jump past TLB reach | *pending* |
-| `saxpy` | SAXPY time per element, 16 KiB–1 GiB footprint, sequential vs random order, with miss counters | Time tracks misses per element; random far slower at DRAM sizes | *pending* |
+| `sanity` | Pitfalls: seq vs rand chase at 1 GiB; THP default vs forced 4 KiB pages, one access per page | Seq chase several × faster (prefetcher); THP default shows few dTLB misses | Supported: seq 1.22 vs rand 99.05 ns (81×); THP default 0.000 vs forced 4 KiB 0.909 dTLB misses/access |
+| `baseline` | Zero-queue latency at 32 KiB / 512 KiB / 16 MiB / 1 GiB (L1/L2/L3/DRAM), 10 reps | L1 ~4 cycles, L2 ~14, L3 ~50, DRAM ~80–100 ns | Supported: 4.0 / 14.0 / 47.3 cycles, 97.9 ns |
+| `ws` | Latency vs working set, 4 KiB–1 GiB, 37 sizes | Plateaus with steps past 48 KiB, 1 MiB, 32 MiB | Supported, incl. 32 MiB (not 64); 3 sessions agree within 0.09% (median) |
+| `pattern` | Seq vs rand × 64/256/1024 B stride at 1 GiB: latency + 1-thread bandwidth | Seq ≫ rand at 64 B; gap shrinks as stride grows | Supported: seq advantage 80× → 34× → 22×; bandwidth 54.0 vs 4.3 GB/s at 64 B |
+| `rw` | Bandwidth at 100/70/50/0 % reads, 1 and 16 threads | Bandwidth falls as write share rises | Supported: 54 → 35 → 29 → 22 GB/s; DRAM traffic ~43–54 GB/s counting write-back |
+| `mlp` | 1 thread, 1–64 independent chains at 1 GiB: bandwidth vs per-load latency | Linear rise, then knee at the core's miss-handling limit | Supported: knee between 48 and 64 chains (~26 GB/s, 159 ns) |
+| `loaded` | One chain's latency while 0–14 other cores stream reads | Flat until near peak bandwidth, then sharp rise | Partly: sharp rise near saturation, but peak with 1 background core (55 GB/s, 423 ns) |
+| `tlb` | One access per 4 KiB page, 4 MiB–1 GiB, 4 KiB vs 2 MiB pages, dTLB misses | 4 KiB pages: misses and latency jump past TLB reach | Supported for misses (reach ~14 MiB); penalty 42–64 cycles/miss, smaller than expected |
+| `saxpy` | SAXPY time per element, 16 KiB–1 GiB footprint, sequential vs random order, with miss counters | Time tracks misses per element; random far slower at DRAM sizes | Supported for random (r = 0.74 with L2 misses); not for sequential (r = −0.17, prefetching) |
 
 ## Benchmarks
 
@@ -148,7 +157,6 @@ The random pattern also reads a 4 B index per chunk (~6 % extra at 64 B stride).
 | | `tlb_latency.png`, `tlb_misses.png` | 4 KiB vs 2 MiB pages |
 | | `results/processed/sanity.md` | Pitfall demos |
 | `plot_intensity.py` | `mlp_tradeoff.png` | Throughput vs latency as loads in flight grow (knee) |
-| | `mlp_littles.png` | Little's Law: measured outstanding misses vs k |
 | | `loaded_latency.png` | Latency vs background bandwidth |
 | `plot_saxpy.py` | `saxpy_runtime.png` | SAXPY time per element vs footprint, seq vs random |
 | | `saxpy_misses.png` | Time per element vs L2 misses per element |
@@ -175,4 +183,7 @@ The random pattern also reads a 4 B index per chunk (~6 % extra at 64 B stride).
 - **Only user-space counters** (`perf_event_paranoid` = 2); AMD L3 (uncore) counters were unavailable, so true
   L3 misses were not measured. perf's generic `cache-misses` counts **L2** misses on AMD Zen.
 - **Intel MLC not used:** on AMD it runs only partly and several modes need root.
+- **Memory speed unknown:** DDR5 speed grade and channels need root (`dmidecode`), so bandwidth is not given as a
+  fraction of theoretical peak.
+- **Read/write mixes measured for throughput only**, not latency.
 - **Shared lab machine:** runs were done with no other users logged in; load average is recorded per session.

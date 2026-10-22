@@ -1,8 +1,53 @@
 # Project 3 – SSD Performance Profiling
 
-ECSE 4320/6320 Advanced Computer Systems. Characterizes a Samsung PM9E1 2 TB NVMe SSD with
-FIO 3.43 on native Windows 11, using direct I/O against a disposable 64 GiB test file.
+This project was completed for ECSE 6320: Advanced Computer Systems. It characterizes a Samsung
+PM9E1 2 TB NVMe SSD with FIO 3.43 on native Windows 11, using direct I/O against a disposable 64 GiB test file.
 Full environment: [`env/system_info.txt`](env/system_info.txt).
+
+## Report
+
+- [Report.pdf](report/Report.pdf)
+- [Report.tex](report/Report.tex) (LaTeX source)
+- [Report.md](report/Report.md) (Markdown)
+
+## AI use
+
+- [AI-use note](report/Report.md#16-ai-use-note)
+
+## How to reproduce
+
+Windows PowerShell, from the repository root (`python` = Windows Python 3.12; WSL `python3` also works,
+since it calls the Windows `fio.exe`):
+
+```powershell
+mkdir C:\fiotest -Force
+python scripts\ssdbench.py --help               # commands; 'run --help' lists every knob
+python scripts\ssdbench.py list                 # experiments, hypotheses, time estimates
+
+python scripts\ssdbench.py run prep             # fill the 64 GiB test file (run twice)
+python scripts\ssdbench.py run sanity qd1
+python scripts\ssdbench.py run sanity --sanity-size 256M --ramp 30 --tag warmcache
+python scripts\ssdbench.py run qd
+python scripts\ssdbench.py run peak --shuffle
+python scripts\ssdbench.py run bs mix range --shuffle
+python scripts\ssdbench.py run tail --qd 4,16,64 --shuffle
+python scripts\ssdbench.py run range --qd 1 --shuffle --tag qd1
+python scripts\ssdbench.py run mix --qd 16 --numjobs 4 --shuffle --tag nj4
+python scripts\ssdbench.py run steady --runtime 240 --yes    # writes ~600 GB
+
+python scripts\ssdbench.py parse                # -> results/processed/*.csv
+python -m pip install matplotlib
+python analysis\plot_qd.py; python analysis\plot_peak.py; python analysis\plot_sweeps.py; python analysis\plot_steady.py
+```
+
+CPU clock logging (second window, during long runs; stop with Ctrl+C):
+
+```powershell
+typeperf "\Processor Information(_Total)\% Processor Performance" "\Processor Information(_Total)\% Processor Utility" -si 5 -o results\raw\<name>_cpu_log.csv
+```
+
+SMART data (temperature, data written, thermal-throttle counters) was read with CrystalDiskInfo
+before and after each batch; screenshots are in `env/`.
 
 ## Headline results
 
@@ -48,7 +93,7 @@ the drive's recent write history.
 | `analysis/` | Parser and plotting scripts (below) |
 | `figures/` | All plots (below) |
 | `env/` | System info and CrystalDiskInfo SMART screenshots |
-| `report/` | Final report (to be added) |
+| `report/` | Final report: `Report.pdf`, LaTeX source `Report.tex`, `Report.md`, and the figures it uses in `ssd_report_figures/` |
 
 ## Experiments
 
@@ -70,41 +115,6 @@ All points ran 3 times (30 s + 5 s warm-up, 10 s cool-down) unless noted. Later 
 | `range --tag qd1` | Same at QD 1 | `range/20261021_001938_qd1` | Small ranges faster | Not supported: flat 71–75 µs |
 | `tail` | p50–p99.9 at QD 4, 16, 64; 120 s runs | `tail/20261020_235259` | Tails grow faster than p50 near knee | Supported: p99.9 +70% vs p50 +28% (QD 4→16) |
 | `steady` | 128 KiB seq write, QD 32, 240 s, 1 s logs, 1 run | `steady/20261021_004515` | Drop when SLC cache fills | Supported: drop after ~27 GB, 6.76 → 1.8 GB/s; recovery bursts |
-
-## How to reproduce
-
-Windows PowerShell, from the repository root (`python` = Windows Python 3.12; WSL `python3` also works,
-since it calls the Windows `fio.exe`):
-
-```powershell
-mkdir C:\fiotest -Force
-python scripts\ssdbench.py --help               # commands; 'run --help' lists every knob
-python scripts\ssdbench.py list                 # experiments, hypotheses, time estimates
-
-python scripts\ssdbench.py run prep             # fill the 64 GiB test file (run twice)
-python scripts\ssdbench.py run sanity qd1
-python scripts\ssdbench.py run sanity --sanity-size 256M --ramp 30 --tag warmcache
-python scripts\ssdbench.py run qd
-python scripts\ssdbench.py run peak --shuffle
-python scripts\ssdbench.py run bs mix range --shuffle
-python scripts\ssdbench.py run tail --qd 4,16,64 --shuffle
-python scripts\ssdbench.py run range --qd 1 --shuffle --tag qd1
-python scripts\ssdbench.py run mix --qd 16 --numjobs 4 --shuffle --tag nj4
-python scripts\ssdbench.py run steady --runtime 240 --yes    # writes ~600 GB
-
-python scripts\ssdbench.py parse                # -> results/processed/*.csv
-python -m pip install matplotlib
-python analysis\plot_qd.py; python analysis\plot_peak.py; python analysis\plot_sweeps.py; python analysis\plot_steady.py
-```
-
-CPU clock logging (second window, during long runs; stop with Ctrl+C):
-
-```powershell
-typeperf "\Processor Information(_Total)\% Processor Performance" "\Processor Information(_Total)\% Processor Utility" -si 5 -o results\raw\<name>_cpu_log.csv
-```
-
-SMART data (temperature, data written, thermal-throttle counters) was read with CrystalDiskInfo
-before and after each batch; screenshots are in `env/`.
 
 ## Analysis scripts and figures
 

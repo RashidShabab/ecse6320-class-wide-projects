@@ -66,32 +66,45 @@ static long anon_huge_kb(void) {
     return kb;
 }
 
-// ---------- user-space cycle counter via perf_event_open (no root needed at paranoid=2) ----------
-static int cycles_fd = -1;
-static void cycles_open(void) {
-    struct perf_event_attr pe;
-    memset(&pe, 0, sizeof pe);
-    pe.type = PERF_TYPE_HARDWARE;
-    pe.size = sizeof pe;
-    pe.config = PERF_COUNT_HW_CPU_CYCLES;
-    pe.disabled = 1;
-    pe.exclude_kernel = 1;
-    pe.exclude_hv = 1;
-    cycles_fd = (int)syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
-    if (cycles_fd < 0)
-        fprintf(stderr, "# warning: perf_event_open failed (%s); cycles reported as NaN\n", strerror(errno));
+// ---------- user-space hardware counters via perf_event_open (no root needed at paranoid=2) ----------
+// Counted only around the timed loop, so building/validating the chain is excluded.
+// 0 = cycles, 1 = L1D read misses, 2 = dTLB read misses. A counter that fails to open reports NaN.
+#define NCTR 3
+static int ctr_fd[NCTR] = {-1, -1, -1};
+static const char *ctr_name[NCTR] = {"cycles", "L1D read misses", "dTLB read misses"};
+static void counters_open(void) {
+    uint64_t cache_miss = (uint64_t)PERF_COUNT_HW_CACHE_OP_READ << 8 |
+                          (uint64_t)PERF_COUNT_HW_CACHE_RESULT_MISS << 16;
+    uint32_t type[NCTR] = {PERF_TYPE_HARDWARE, PERF_TYPE_HW_CACHE, PERF_TYPE_HW_CACHE};
+    uint64_t config[NCTR] = {PERF_COUNT_HW_CPU_CYCLES, PERF_COUNT_HW_CACHE_L1D | cache_miss,
+                             PERF_COUNT_HW_CACHE_DTLB | cache_miss};
+    for (int i = 0; i < NCTR; i++) {
+        struct perf_event_attr pe;
+        memset(&pe, 0, sizeof pe);
+        pe.type = type[i];
+        pe.size = sizeof pe;
+        pe.config = config[i];
+        pe.disabled = 1;
+        pe.exclude_kernel = 1;
+        pe.exclude_hv = 1;
+        ctr_fd[i] = (int)syscall(__NR_perf_event_open, &pe, 0, -1, -1, 0);
+        if (ctr_fd[i] < 0)
+            fprintf(stderr, "# warning: counter '%s' unavailable (%s); reported as NaN\n",
+                    ctr_name[i], strerror(errno));
+    }
 }
-static void cycles_start(void) {
-    if (cycles_fd < 0) return;
-    ioctl(cycles_fd, PERF_EVENT_IOC_RESET, 0);
-    ioctl(cycles_fd, PERF_EVENT_IOC_ENABLE, 0);
+static void counters_start(void) {
+    for (int i = 0; i < NCTR; i++)
+        if (ctr_fd[i] >= 0) { ioctl(ctr_fd[i], PERF_EVENT_IOC_RESET, 0); ioctl(ctr_fd[i], PERF_EVENT_IOC_ENABLE, 0); }
 }
-static double cycles_stop(void) {
-    if (cycles_fd < 0) return -1;
-    ioctl(cycles_fd, PERF_EVENT_IOC_DISABLE, 0);
-    uint64_t c = 0;
-    if (read(cycles_fd, &c, sizeof c) != sizeof c) return -1;
-    return (double)c;
+static void counters_stop(double *v) {
+    for (int i = 0; i < NCTR; i++) {
+        v[i] = 0.0 / 0.0;
+        if (ctr_fd[i] < 0) continue;
+        ioctl(ctr_fd[i], PERF_EVENT_IOC_DISABLE, 0);
+        uint64_t c = 0;
+        if (read(ctr_fd[i], &c, sizeof c) == sizeof c) v[i] = (double)c;
+    }
 }
 
 // ---------- chase kernels ----------
@@ -118,7 +131,8 @@ static chase_fn pick_kernel(int k) {
 static void spin_ms(int ms) {  // let the core ramp its clock before timing
     double end = now_ns() + ms * 1e6;
     volatile uint64_t x = 0;
-    while (now_ns() < end) x++;
+    while (now_ns() < end) x = x + 1;
+    (void)x;
 }
 
 static void usage(const char *prog) {
@@ -162,7 +176,8 @@ int main(int argc, char **argv) {
     }
     if (header)
         printf("size_bytes,stride,pattern,chains,pages,cpu,rep,loads,ns_per_load,"
-               "cycles_per_load,lat_ns_per_chain,eff_ghz,mb_per_s,anon_huge_kb\n");
+               "cycles_per_load,lat_ns_per_chain,eff_ghz,mb_per_s,l1d_miss_per_load,"
+               "dtlb_miss_per_load,anon_huge_kb\n");
     if (size == 0) { if (header) return 0; usage(argv[0]); }
 
     chase_fn kernel = pick_kernel(k);
@@ -238,26 +253,28 @@ int main(int argc, char **argv) {
     uint64_t steps = n_loads / (uint64_t)k;
     uint64_t loads = steps * (uint64_t)k;
 
-    cycles_open();
+    counters_open();
     spin_ms(warm_ms);
     kernel(heads, seg);  // one full lap: pulls the working set into cache/TLB
 
     double bytes_per_load = stride < 64 ? (double)stride : 64.0;
     for (int r = 0; r < reps; r++) {
-        cycles_start();
+        double ctr[NCTR];
+        counters_start();
         double t0 = now_ns();
         kernel(heads, steps);
         double t1 = now_ns();
-        double cyc = cycles_stop();
+        counters_stop(ctr);
         double ns = (t1 - t0) / (double)loads;
-        double cpl = cyc >= 0 ? cyc / (double)loads : 0.0 / 0.0;
-        double ghz = cyc >= 0 ? cyc / (t1 - t0) : 0.0 / 0.0;
+        double cpl = ctr[0] / (double)loads;   // NaN propagates if the counter is unavailable
+        double ghz = ctr[0] / (t1 - t0);
         double mbps = bytes_per_load * (double)loads / ((t1 - t0) * 1e-9) / 1e6;
         // ns_per_load = time / total loads (throughput view);
         // lat_ns_per_chain = ns_per_load * k = latency each individual load saw
-        printf("%lu,%lu,%s,%d,%s,%d,%d,%lu,%.4f,%.3f,%.3f,%.3f,%.1f,%ld\n",
+        printf("%lu,%lu,%s,%d,%s,%d,%d,%lu,%.4f,%.3f,%.3f,%.3f,%.1f,%.4f,%.4f,%ld\n",
                (unsigned long)size, (unsigned long)stride, pattern, k, pages, cpu, r,
-               (unsigned long)loads, ns, cpl, ns * k, ghz, mbps, huge_kb);
+               (unsigned long)loads, ns, cpl, ns * k, ghz, mbps,
+               ctr[1] / (double)loads, ctr[2] / (double)loads, huge_kb);
         fflush(stdout);
     }
     // keep the final pointers observable so the compiler cannot drop the chase

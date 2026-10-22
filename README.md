@@ -6,6 +6,12 @@ This repository holds my three class-wide projects. Each folder is self-containe
 its own source code, run scripts, raw and processed data, plotting scripts, figures,
 report (PDF, LaTeX and Markdown) and README with reproduction steps.
 
+| Project | Topic | Platform | Report |
+|---|---|---|---|
+| [Project 1](project_1_simd_adv_profiling/) | SIMD advantage profiling | Intel Core Ultra 7 265H, WSL2, GCC 15.2 | [PDF](project_1_simd_adv_profiling/report/Report.pdf) |
+| [Project 2](project_2_cache_memory_profiling/) | Cache & memory performance profiling | AMD Ryzen 9 9950X (Zen 5), CachyOS Linux, GCC 16.2 | [PDF](project_2_cache_memory_profiling/report/Report.pdf) |
+| [Project 3](project_3_ssd_profiling/) | SSD performance profiling | Samsung PM9E1 2 TB NVMe, Windows 11, FIO 3.43 | [PDF](project_3_ssd_profiling/report/Report.pdf) |
+
 ## Common requirements
 
 Every project includes the items required for all class-wide projects:

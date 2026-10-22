@@ -1,0 +1,202 @@
+{
+  "experiment": "sanity",
+  "session": "20261022_165421",
+  "tag": null,
+  "description": "Pitfall demos: sequential vs random pointer chase at 1 GiB; THP default vs forced 4 KiB pages in a one-access-per-page test.",
+  "hypothesis": "Sequential chase looks several times faster than random (prefetcher); with THP=always the 'default page' run shows few dTLB misses, the forced-4 KiB run many.",
+  "gcc": "gcc (GCC) 16.2.1 20260810",
+  "perf": "perf version 7.2.11-1",
+  "uptime": " 16:54:21 up 1 day,  1:05,  3 users,  load average: 0.51, 0.67, 0.36",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "sanity",
+      "baseline"
+    ],
+    "cpu": 2,
+    "cpus": "2-7,0,1,8-15",
+    "lat_cpu": 15,
+    "bw_cpus": "0-14",
+    "reps": 5,
+    "cooldown": 1,
+    "shuffle": false,
+    "sizes": null,
+    "strides": null,
+    "mix": null,
+    "threads": null,
+    "chains": null,
+    "outdir": "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/results/raw",
+    "tag": null,
+    "dry_run": false
+  },
+  "argv": [
+    "scripts/membench.py",
+    "run",
+    "sanity",
+    "baseline"
+  ],
+  "points": [
+    {
+      "name": "chase_1G_rand",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "chase_1G_seq",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-p",
+        "seq",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "tlb_512M_pagedefault",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "512M",
+        "-S",
+        "4096",
+        "-P",
+        "thp",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "5M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "tlb_512M_page4k",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "512M",
+        "-S",
+        "4096",
+        "-P",
+        "4k",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "5M"
+      ],
+      "perf": null,
+      "load": null
+    }
+  ],
+  "runs": [
+    {
+      "point": "chase_1G_rand",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:21.818389",
+      "end": "2026-10-22T16:54:35.980758",
+      "returncode": 0
+    },
+    {
+      "point": "chase_1G_seq",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-p",
+        "seq",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:36.981035",
+      "end": "2026-10-22T16:54:37.465467",
+      "returncode": 0
+    },
+    {
+      "point": "tlb_512M_pagedefault",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "512M",
+        "-S",
+        "4096",
+        "-P",
+        "thp",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "5M"
+      ],
+      "start": "2026-10-22T16:54:38.465770",
+      "end": "2026-10-22T16:54:41.337132",
+      "returncode": 0
+    },
+    {
+      "point": "tlb_512M_page4k",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "512M",
+        "-S",
+        "4096",
+        "-P",
+        "4k",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "5M"
+      ],
+      "start": "2026-10-22T16:54:42.337905",
+      "end": "2026-10-22T16:54:45.504644",
+      "returncode": 0
+    }
+  ]
+}

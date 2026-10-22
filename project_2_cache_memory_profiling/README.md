@@ -70,7 +70,7 @@ Run long sessions inside `tmux`, with no other users on the machine (`who`, `upt
 |---|---|
 | `src/pchase.c` | Pointer-chase benchmark: latency, memory-level parallelism (k chains), page-size control, in-process cycle / L1D / dTLB counters, chain self-validation |
 | `src/bwbench.c` | Bandwidth benchmark: 64 B chunks, stride, seq/rand order, read/write mix, pinned threads |
-| `src/saxpy.c` | SAXPY `y = a·x + y`: footprint sweep, sequential (vectorized) or shuffled-index order, in-process cycles / instructions / L1D / LLC / dTLB counters, validated against a scalar reference |
+| `src/saxpy.c` | SAXPY `y = a·x + y`: footprint sweep, sequential (vectorized) or shuffled-index order, in-process cycles / instructions / L1D / generic cache-miss (= L2 miss on AMD) / dTLB counters, validated against a scalar reference |
 | `src/chase_kernels.h` | Generated chase loops, one per chain count (`scripts/gen_kernels.py`) |
 | `scripts/membench.py` | Runs every experiment (`list`, `run`, `env`, `parse`; see `--help`). Saves commands, output and manifests |
 | `scripts/env_capture.sh` | Records CPU, caches, topology, governor, THP, SMT, load, tool versions |
@@ -151,8 +151,8 @@ The random pattern also reads a 4 B index per chunk (~6 % extra at 64 B stride).
 | | `mlp_littles.png` | Little's Law: measured outstanding misses vs k |
 | | `loaded_latency.png` | Latency vs background bandwidth |
 | `plot_saxpy.py` | `saxpy_runtime.png` | SAXPY time per element vs footprint, seq vs random |
-| | `saxpy_misses.png` | Time per element vs LLC misses per element |
-| | `results/processed/saxpy.md` | Table + Pearson correlation of time with L1D / LLC misses |
+| | `saxpy_misses.png` | Time per element vs L2 misses per element |
+| | `results/processed/saxpy.md` | Table + Pearson correlation of time with L1D / L2 misses |
 
 ## Design notes and pitfalls caught
 
@@ -172,6 +172,7 @@ The random pattern also reads a 4 B index per chunk (~6 % extra at 64 B stride).
   in cycles, and the actual clock is recorded per repetition (`eff_ghz`).
 - **Hardware prefetchers could not be disabled** (needs MSR access); randomized order defeats them for
   latency measurements.
-- **Only user-space counters** (`perf_event_paranoid` = 2); AMD L3 (uncore) counters were unavailable.
+- **Only user-space counters** (`perf_event_paranoid` = 2); AMD L3 (uncore) counters were unavailable, so true
+  L3 misses were not measured. perf's generic `cache-misses` counts **L2** misses on AMD Zen.
 - **Intel MLC not used:** on AMD it runs only partly and several modes need root.
 - **Shared lab machine:** runs were done with no other users logged in; load average is recorded per session.

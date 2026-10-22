@@ -1,0 +1,1 @@
+# size=1073741824 threads=1 per_thread=1073741824 stride=1024 chunks=1048576 pattern=rand read_pct=100 pages=huge passes=64 cpus=[2]

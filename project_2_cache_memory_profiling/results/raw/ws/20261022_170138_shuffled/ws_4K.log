@@ -1,0 +1,1 @@
+# size=4096 stride=64 nodes_used=64 chains=1 pattern=rand pages=huge cpu=2 validation=ok AnonHugePages=2048 kB

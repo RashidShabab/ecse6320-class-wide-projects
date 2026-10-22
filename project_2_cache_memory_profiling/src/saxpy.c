@@ -51,10 +51,12 @@ static uint64_t parse_size(const char *s) {
     return (uint64_t)v;
 }
 
-// ---- counters: cycles, instructions, L1D read misses, last-level cache misses, dTLB read misses ----
+// ---- counters: cycles, instructions, L1D read misses, generic cache-misses, dTLB read misses ----
+// PERF_COUNT_HW_CACHE_MISSES is mapped by Linux to an L2-miss event on AMD Zen, so the
+// llc_miss_per_elem column counts L2 misses on this machine (name kept for data compatibility).
 #define NCTR 5
 static int fd[NCTR] = {-1, -1, -1, -1, -1};
-static const char *cname[NCTR] = {"cycles", "instructions", "L1D read misses", "LLC misses", "dTLB read misses"};
+static const char *cname[NCTR] = {"cycles", "instructions", "L1D read misses", "cache-misses (L2 on AMD)", "dTLB read misses"};
 static void counters_open(void) {
     uint64_t miss = (uint64_t)PERF_COUNT_HW_CACHE_OP_READ << 8 | (uint64_t)PERF_COUNT_HW_CACHE_RESULT_MISS << 16;
     uint32_t type[NCTR] = {PERF_TYPE_HARDWARE, PERF_TYPE_HARDWARE, PERF_TYPE_HW_CACHE, PERF_TYPE_HARDWARE,

@@ -1,0 +1,1 @@
+# size=3758096384 threads=14 per_thread=268435456 stride=64 chunks=4194304 pattern=seq read_pct=100 pages=huge passes=1 cpus=[0 1 2 3 4 5 6 7 8 9 10 11 12 13]

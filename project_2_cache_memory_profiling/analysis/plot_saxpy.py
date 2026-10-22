@@ -1,8 +1,12 @@
 """Cache-miss impact on SAXPY (y = a*x + y).
 
   figures/saxpy_runtime.png    time per element vs footprint, sequential vs random order
-  figures/saxpy_misses.png     time per element vs LLC misses per element (correlation)
-  results/processed/saxpy.md   table + Pearson correlation of time with L1D and LLC misses
+  figures/saxpy_misses.png     time per element vs L2 misses per element (correlation)
+  results/processed/saxpy.md   table + Pearson correlation of time with L1D and L2 misses
+
+Note: the column llc_miss_per_elem comes from perf's generic `cache-misses` event, which
+Linux maps to an L2-miss event on AMD Zen (true L3 misses need uncore counters / root).
+The data confirm it: the count rises past L2's 1 MiB, not L3's 32 MiB.
 
 Usage: python3 analysis/plot_saxpy.py [--session S]   (default: latest saxpy session)
 Points are medians; bars span min-max across repetitions.
@@ -59,7 +63,7 @@ def main():
     ax.legend(frameon=False, fontsize=9, labelcolor=INK, loc="upper left", bbox_to_anchor=(0, 0.9))
     save(fig, "saxpy_runtime.png")
 
-    fig, ax = new("SAXPY time per element vs last-level cache misses", sub)
+    fig, ax = new("SAXPY time per element vs L2 misses", sub + "; L2 misses = perf generic cache-misses on AMD")
     lines, corr = [], {}
     for i, p in enumerate(("seq", "rand")):
         rs = by[p]
@@ -77,7 +81,7 @@ def main():
                          f"| {f(r, 'cycles_per_elem_median'):.2f} | {f(r, 'ipc_median'):.2f} "
                          f"| {f(r, 'l1d_miss_per_elem_median'):.4f} | {f(r, 'llc_miss_per_elem_median'):.4f} "
                          f"| {f(r, 'dtlb_miss_per_elem_median'):.4f} | {f(r, 'gb_per_s_median'):.1f} |")
-    ax.set_xlabel("LLC misses per element", color=INK)
+    ax.set_xlabel("L2 misses per element", color=INK)
     ax.set_ylabel("Time per element (ns, log scale)", color=INK)
     ax.set_yscale("log")
     ax.set_xlim(left=0)
@@ -86,11 +90,12 @@ def main():
 
     out = ROOT / "results" / "processed" / "saxpy.md"
     text = [f"SAXPY cache-miss impact (session {session}; medians of {rows[0]['n']} reps)", "",
-            "| Order | Footprint | ns/elem | cycles/elem | IPC | L1D miss/elem | LLC miss/elem | dTLB miss/elem | GB/s (12 B/elem) |",
+            "| Order | Footprint | ns/elem | cycles/elem | IPC | L1D miss/elem | L2 miss/elem* | dTLB miss/elem | GB/s (12 B/elem) |",
             "|---|---|---|---|---|---|---|---|---|", *lines, "",
+            "*perf generic `cache-misses`, which counts L2 misses on AMD Zen.", "",
             "Pearson correlation of time per element with misses per element (across footprints):", ""]
     for p, (r1, r2) in corr.items():
-        text.append(f"- {LABELS[p]}: L1D r = {r1:.3f}, LLC r = {r2:.3f}")
+        text.append(f"- {LABELS[p]}: L1D r = {r1:.3f}, L2 r = {r2:.3f}")
     out.write_text("\n".join(text) + "\n")
     print("\n".join(text))
     print("wrote", out)

@@ -62,7 +62,7 @@ def rw():
         return print("no rw results")
     fig, ax = new("Bandwidth vs read/write mix",
                   f"bwbench, sequential, 64 B stride, {size_label(rows[0]['size_bytes'])}, {rows[0]['n']} reps; "
-                  "writes counted once (real DRAM traffic ~2x: read-for-ownership + write-back)")
+                  "written bytes counted once (DRAM moves them ~2x)")
     for i, t in enumerate(sorted({int(r["threads"]) for r in rows})):
         rs = sorted((r for r in rows if int(r["threads"]) == t), key=lambda r: -int(r["read_pct"]))
         x = [int(r["read_pct"]) for r in rs]

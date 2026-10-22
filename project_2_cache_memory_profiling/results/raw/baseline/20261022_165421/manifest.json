@@ -1,0 +1,214 @@
+{
+  "experiment": "baseline",
+  "session": "20261022_165421",
+  "tag": null,
+  "description": "Zero-queue baselines: dependent random pointer chase, one load in flight, at 32 KiB, 512 KiB, 16 MiB and 1 GiB (L1, L2, L3, DRAM).",
+  "hypothesis": "L1 ~4 cycles, L2 ~14 cycles, L3 ~50 cycles, DRAM ~80-100 ns.",
+  "gcc": "gcc (GCC) 16.2.1 20260810",
+  "perf": "perf version 7.2.11-1",
+  "uptime": " 16:54:45 up 1 day,  1:06,  3 users,  load average: 0.58, 0.67, 0.37",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "sanity",
+      "baseline"
+    ],
+    "cpu": 2,
+    "cpus": "2-7,0,1,8-15",
+    "lat_cpu": 15,
+    "bw_cpus": "0-14",
+    "reps": 10,
+    "cooldown": 1,
+    "shuffle": false,
+    "sizes": null,
+    "strides": null,
+    "mix": null,
+    "threads": null,
+    "chains": null,
+    "outdir": "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/results/raw",
+    "tag": null,
+    "dry_run": false
+  },
+  "argv": [
+    "scripts/membench.py",
+    "run",
+    "sanity",
+    "baseline"
+  ],
+  "points": [
+    {
+      "name": "L1_32K",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "32K",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null,
+      "level": "L1"
+    },
+    {
+      "name": "L2_512K",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "512K",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null,
+      "level": "L2"
+    },
+    {
+      "name": "L3_16M",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "16M",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null,
+      "level": "L3"
+    },
+    {
+      "name": "DRAM_1G",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null,
+      "level": "DRAM"
+    }
+  ],
+  "runs": [
+    {
+      "point": "L1_32K",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "32K",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:45.530246",
+      "end": "2026-10-22T16:54:45.878246",
+      "returncode": 0
+    },
+    {
+      "point": "L2_512K",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "512K",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:46.878501",
+      "end": "2026-10-22T16:54:47.764603",
+      "returncode": 0
+    },
+    {
+      "point": "L3_16M",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "16M",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:48.764869",
+      "end": "2026-10-22T16:54:50.939862",
+      "returncode": 0
+    },
+    {
+      "point": "DRAM_1G",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "10",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T16:54:51.940545",
+      "end": "2026-10-22T16:55:16.221565",
+      "returncode": 0
+    }
+  ]
+}

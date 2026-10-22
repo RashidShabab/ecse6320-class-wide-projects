@@ -1,0 +1,504 @@
+{
+  "experiment": "mlp",
+  "session": "20261022_170933",
+  "tag": null,
+  "description": "Intensity sweep part 1: 1 thread with 1-32 independent pointer chains (memory-level parallelism) at 1 GiB.",
+  "hypothesis": "Throughput rises ~linearly with chains, then flattens at the core's miss-handling limit while per-chain latency rises (the knee).",
+  "gcc": "gcc (GCC) 16.2.1 20260810",
+  "perf": "perf version 7.2.11-1",
+  "uptime": " 17:09:33 up 1 day,  1:20,  3 users,  load average: 0.53, 0.70, 0.53",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "mlp",
+      "loaded"
+    ],
+    "cpu": 2,
+    "cpus": "2-7,0,1,8-15",
+    "lat_cpu": 15,
+    "bw_cpus": "0-14",
+    "reps": 5,
+    "cooldown": 1,
+    "shuffle": false,
+    "sizes": null,
+    "strides": null,
+    "mix": null,
+    "threads": null,
+    "chains": null,
+    "outdir": "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/results/raw",
+    "tag": null,
+    "dry_run": false
+  },
+  "argv": [
+    "scripts/membench.py",
+    "run",
+    "mlp",
+    "loaded"
+  ],
+  "points": [
+    {
+      "name": "mlp_k1",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k2",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "2",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k4",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "4",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k6",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "6",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k8",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "8",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k10",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "10",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k12",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "12",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k16",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "16",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k20",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "20",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k24",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "24",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    },
+    {
+      "name": "mlp_k32",
+      "tool": "pchase",
+      "args": [
+        "-s",
+        "1G",
+        "-k",
+        "32",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "perf": null,
+      "load": null
+    }
+  ],
+  "runs": [
+    {
+      "point": "mlp_k1",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "1",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:09:33.189781",
+      "end": "2026-10-22T17:09:47.187713",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k2",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "2",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:09:48.188030",
+      "end": "2026-10-22T17:09:56.266170",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k4",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "4",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:09:57.266809",
+      "end": "2026-10-22T17:10:02.493833",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k6",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "6",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:03.494137",
+      "end": "2026-10-22T17:10:07.691067",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k8",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "8",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:08.691710",
+      "end": "2026-10-22T17:10:12.404952",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k10",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "10",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:13.405220",
+      "end": "2026-10-22T17:10:16.798865",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k12",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "12",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:17.799089",
+      "end": "2026-10-22T17:10:21.019076",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k16",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "16",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:22.019431",
+      "end": "2026-10-22T17:10:24.965407",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k20",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "20",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:25.965737",
+      "end": "2026-10-22T17:10:28.758591",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k24",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "24",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:29.758918",
+      "end": "2026-10-22T17:10:32.452220",
+      "returncode": 0
+    },
+    {
+      "point": "mlp_k32",
+      "cmd": [
+        "/home/rashid/rashid_wd/ecse6320-class-wide-projects/project_2_cache_memory_profiling/pchase",
+        "-H",
+        "-s",
+        "1G",
+        "-k",
+        "32",
+        "-p",
+        "rand",
+        "-c",
+        "2",
+        "-r",
+        "5",
+        "-n",
+        "20M"
+      ],
+      "start": "2026-10-22T17:10:33.452917",
+      "end": "2026-10-22T17:10:36.033963",
+      "returncode": 0
+    }
+  ]
+}

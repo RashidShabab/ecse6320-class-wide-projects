@@ -51,21 +51,26 @@ def loaded():
     rows, session = load("loaded")
     if not rows:
         return print("no loaded results")
-    rows.sort(key=lambda r: f(r, "bg_gb_per_s_median") if r.get("bg_gb_per_s_median") else 0)
-    x = [f(r, "bg_gb_per_s_median") for r in rows]
-    y, e = errs(rows, "ns_per_load")
+    rows.sort(key=lambda r: int(float(r.get("load_threads") or 0)))
     n = [int(float(r.get("load_threads") or 0)) for r in rows]
-    fig, ax = new("Loaded latency: one chain while other cores stream",
-                  f"Probe: pchase 1 chain, {size_label(rows[0]['size_bytes'])}, CPU {rows[0]['cpu']}; "
-                  f"load: bwbench sequential reads on 0-14 other cores; {rows[0]['n']} reps")
-    ax.errorbar(x, y, yerr=e, color=ORANGE, ecolor=ORANGE, elinewidth=1, capsize=3, linewidth=2,
+    y, e = errs(rows, "ns_per_load")
+    bw = [f(r, "bg_gb_per_s_median") for r in rows]
+    fig, ax = new("Loaded latency: one chain while other cores stream reads",
+                  f"Probe: pchase 1 chain, {size_label(rows[0]['size_bytes'])}, CPU {rows[0]['cpu']} (CCD 1); "
+                  f"load: bwbench seq reads on CPUs 0..N-1; {rows[0]['n']} reps; labels = background GB/s")
+    ax.axvspan(8.5, max(n) + 1, color=MUTED, alpha=0.08, linewidth=0)
+    ax.text(8.7, 0.97, "load reaches the probe's CCD (CPUs 8-14)", transform=ax.get_xaxis_transform(),
+            color=MUTED, fontsize=8, va="top")
+    ax.errorbar(n, y, yerr=e, color=ORANGE, ecolor=ORANGE, elinewidth=1, capsize=3, linewidth=2,
                 marker="s", markersize=6)
-    for xi, yi, t in zip(x, y, n):
-        ax.annotate(f"{t} cores", (xi, yi), textcoords="offset points", xytext=(6, -12), fontsize=8, color=INK)
-    ax.set_xlabel("Background bandwidth (GB/s)", color=INK)
+    for xi, yi, b in zip(n, y, bw):
+        ax.annotate(f"{b:.1f}", (xi, yi), textcoords="offset points", xytext=(0, 8), ha="center",
+                    fontsize=8, color=INK)
+    ax.set_xticks(n)
+    ax.set_xlim(-0.5, max(n) + 1)
+    ax.set_xlabel("Background cores streaming", color=INK)
     ax.set_ylabel("Probe latency (ns)", color=INK)
-    ax.set_xlim(left=0)
-    ax.set_ylim(bottom=0)
+    ax.set_ylim(0, max(y) * 1.12)
     save(fig, "loaded_latency.png")
 
 

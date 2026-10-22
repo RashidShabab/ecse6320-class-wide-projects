@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "six compiler variants build under WSL",
+    "six optimized reference validations pass",
+    "ASan/UBSan pass for both datatypes",
+    "final Python syntax passes",
+    "README and report links resolve",
+    "retained final results, figures and compiler evidence match relocation hashes"
+  ],
+  "analysis_regenerated": false,
+  "analysis_limitation": "Plot generation was not rerun: available Windows/WSL environments lack the full plotting dependencies.",
+  "benchmarks_rerun": false
+}

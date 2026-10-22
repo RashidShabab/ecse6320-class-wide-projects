@@ -1,0 +1,190 @@
+[
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float32_scalar.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_scalar"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_scalar"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float32_auto.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_auto"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_auto"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float32_native.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_native"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float32_native"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "src/validate_v3.c",
+      "src/kernels_v3.c",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/sanitize_float32"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/sanitize_float32"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DDOUBLE",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float64_scalar.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_scalar"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_scalar"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DDOUBLE",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float64_auto.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_auto"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_auto"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DDOUBLE",
+      "src/validate_v3.c",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float64_native.o",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_native"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/validate_float64_native"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "gcc",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-DDOUBLE",
+      "src/validate_v3.c",
+      "src/kernels_v3.c",
+      "-lm",
+      "-o",
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/sanitize_float64"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/sanitize_float64"
+    ],
+    "stdout": "PASS: reference validation, sizes 0..4097, strides 1/2/4/8, two offsets\n",
+    "stderr": ""
+  }
+]

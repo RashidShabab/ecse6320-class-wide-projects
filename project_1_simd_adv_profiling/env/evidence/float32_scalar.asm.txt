@@ -1,0 +1,131 @@
+
+/home/shabar/rashid_wd/ecse6320/project_1_simd_adv_profiling/bin/v3/float32_scalar.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <saxpy_v3>:
+   0:	f3 0f 1e fa          	endbr64
+   4:	49 89 f8             	mov    r8,rdi
+   7:	48 89 d7             	mov    rdi,rdx
+   a:	48 83 f9 01          	cmp    rcx,0x1
+   e:	74 58                	je     68 <saxpy_v3+0x68>
+  10:	48 85 d2             	test   rdx,rdx
+  13:	0f 84 87 00 00 00    	je     a0 <saxpy_v3+0xa0>
+  19:	f3 0f 10 0d 00 00 00 	movss  xmm1,DWORD PTR [rip+0x0]        # 21 <saxpy_v3+0x21>
+  20:	00 
+			1d: R_X86_64_PC32	.LC0-0x4
+  21:	48 c1 e1 02          	shl    rcx,0x2
+  25:	31 c0                	xor    eax,eax
+  27:	31 d2                	xor    edx,edx
+  29:	90                   	nop
+  2a:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  31:	00 00 00 00 
+  35:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  3c:	00 00 00 00 
+  40:	f3 41 0f 10 04 00    	movss  xmm0,DWORD PTR [r8+rax*1]
+  46:	48 83 c2 01          	add    rdx,0x1
+  4a:	f3 0f 59 c1          	mulss  xmm0,xmm1
+  4e:	f3 0f 58 04 06       	addss  xmm0,DWORD PTR [rsi+rax*1]
+  53:	f3 0f 11 04 06       	movss  DWORD PTR [rsi+rax*1],xmm0
+  58:	48 01 c8             	add    rax,rcx
+  5b:	48 39 d7             	cmp    rdi,rdx
+  5e:	75 e0                	jne    40 <saxpy_v3+0x40>
+  60:	c3                   	ret
+  61:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+  68:	48 85 d2             	test   rdx,rdx
+  6b:	74 f3                	je     60 <saxpy_v3+0x60>
+  6d:	f3 0f 10 0d 00 00 00 	movss  xmm1,DWORD PTR [rip+0x0]        # 75 <saxpy_v3+0x75>
+  74:	00 
+			71: R_X86_64_PC32	.LC0-0x4
+  75:	31 c0                	xor    eax,eax
+  77:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+  7e:	00 00 
+  80:	f3 41 0f 10 04 80    	movss  xmm0,DWORD PTR [r8+rax*4]
+  86:	f3 0f 59 c1          	mulss  xmm0,xmm1
+  8a:	f3 0f 58 04 86       	addss  xmm0,DWORD PTR [rsi+rax*4]
+  8f:	f3 0f 11 04 86       	movss  DWORD PTR [rsi+rax*4],xmm0
+  94:	48 83 c0 01          	add    rax,0x1
+  98:	48 39 c7             	cmp    rdi,rax
+  9b:	75 e3                	jne    80 <saxpy_v3+0x80>
+  9d:	c3                   	ret
+  9e:	66 90                	xchg   ax,ax
+  a0:	c3                   	ret
+  a1:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  a5:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+  ac:	00 00 00 00 
+
+00000000000000b0 <dot_v3>:
+  b0:	f3 0f 1e fa          	endbr64
+  b4:	48 85 d2             	test   rdx,rdx
+  b7:	74 27                	je     e0 <dot_v3+0x30>
+  b9:	31 c0                	xor    eax,eax
+  bb:	66 0f ef c9          	pxor   xmm1,xmm1
+  bf:	90                   	nop
+  c0:	f3 0f 10 04 87       	movss  xmm0,DWORD PTR [rdi+rax*4]
+  c5:	f3 0f 59 04 86       	mulss  xmm0,DWORD PTR [rsi+rax*4]
+  ca:	48 83 c0 01          	add    rax,0x1
+  ce:	f3 0f 58 c8          	addss  xmm1,xmm0
+  d2:	48 39 c2             	cmp    rdx,rax
+  d5:	75 e9                	jne    c0 <dot_v3+0x10>
+  d7:	0f 28 c1             	movaps xmm0,xmm1
+  da:	c3                   	ret
+  db:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+  e0:	66 0f ef c9          	pxor   xmm1,xmm1
+  e4:	0f 28 c1             	movaps xmm0,xmm1
+  e7:	c3                   	ret
+  e8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+  ef:	00 
+
+00000000000000f0 <stencil_v3>:
+  f0:	f3 0f 1e fa          	endbr64
+  f4:	48 85 d2             	test   rdx,rdx
+  f7:	74 7c                	je     175 <stencil_v3+0x85>
+  f9:	f3 0f 10 07          	movss  xmm0,DWORD PTR [rdi]
+  fd:	f3 0f 10 4f 04       	movss  xmm1,DWORD PTR [rdi+0x4]
+ 102:	31 c0                	xor    eax,eax
+ 104:	f3 0f 10 1d 00 00 00 	movss  xmm3,DWORD PTR [rip+0x0]        # 10c <stencil_v3+0x1c>
+ 10b:	00 
+			108: R_X86_64_PC32	.LC2-0x4
+ 10c:	f3 0f 10 2d 00 00 00 	movss  xmm5,DWORD PTR [rip+0x0]        # 114 <stencil_v3+0x24>
+ 113:	00 
+			110: R_X86_64_PC32	.LC0-0x4
+ 114:	eb 2d                	jmp    143 <stencil_v3+0x53>
+ 116:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+ 11d:	00 00 
+ 11f:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+ 126:	00 00 00 00 
+ 12a:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+ 131:	00 00 00 00 
+ 135:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+ 13c:	00 00 00 00 
+ 140:	0f 28 ca             	movaps xmm1,xmm2
+ 143:	f3 0f 59 c3          	mulss  xmm0,xmm3
+ 147:	0f 28 e1             	movaps xmm4,xmm1
+ 14a:	48 83 c0 01          	add    rax,0x1
+ 14e:	f3 0f 59 e5          	mulss  xmm4,xmm5
+ 152:	f3 0f 10 54 87 04    	movss  xmm2,DWORD PTR [rdi+rax*4+0x4]
+ 158:	f3 0f 58 c4          	addss  xmm0,xmm4
+ 15c:	0f 28 e2             	movaps xmm4,xmm2
+ 15f:	f3 0f 59 e3          	mulss  xmm4,xmm3
+ 163:	f3 0f 58 c4          	addss  xmm0,xmm4
+ 167:	f3 0f 11 44 86 fc    	movss  DWORD PTR [rsi+rax*4-0x4],xmm0
+ 16d:	0f 28 c1             	movaps xmm0,xmm1
+ 170:	48 39 d0             	cmp    rax,rdx
+ 173:	75 cb                	jne    140 <stencil_v3+0x50>
+ 175:	c3                   	ret
+ 176:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+ 17d:	00 00 00 
+
+0000000000000180 <copy_v3>:
+ 180:	f3 0f 1e fa          	endbr64
+ 184:	48 89 f8             	mov    rax,rdi
+ 187:	48 89 f7             	mov    rdi,rsi
+ 18a:	48 85 d2             	test   rdx,rdx
+ 18d:	74 11                	je     1a0 <copy_v3+0x20>
+ 18f:	48 c1 e2 02          	shl    rdx,0x2
+ 193:	48 89 c6             	mov    rsi,rax
+ 196:	e9 00 00 00 00       	jmp    19b <copy_v3+0x1b>
+			197: R_X86_64_PLT32	memcpy-0x4
+ 19b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+ 1a0:	c3                   	ret

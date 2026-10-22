@@ -1,0 +1,28 @@
+src/kernels_v3.c:8:30: optimized: loop vectorized using 16 byte vectors
+src/kernels_v3.c:8:30: optimized: loop vectorized using 8 byte vectors
+src/kernels_v3.c:10:30: missed: couldn't vectorize loop
+src/kernels_v3.c:10:67: missed: not vectorized: no vectype for stmt: _11 = *_10;
+ scalar_type: const real
+src/kernels_v3.c:5:6: note: vectorized 1 loops in function.
+src/kernels_v3.c:5:6: note: ***** Analysis failed with vector mode V4SF
+src/kernels_v3.c:5:6: note: ***** The result for vector mode V16QI would be the same
+src/kernels_v3.c:5:6: note: ***** Re-trying analysis with vector mode V8QI
+src/kernels_v3.c:5:6: note: ***** Analysis failed with vector mode V8QI
+src/kernels_v3.c:5:6: note: ***** Re-trying analysis with vector mode V4QI
+src/kernels_v3.c:5:6: note: ***** Analysis failed with vector mode V4QI
+src/kernels_v3.c:16:26: optimized: loop vectorized using 16 byte vectors
+src/kernels_v3.c:13:6: note: vectorized 1 loops in function.
+src/kernels_v3.c:17:12: note: ***** Analysis failed with vector mode V4SF
+src/kernels_v3.c:17:12: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V4SF
+src/kernels_v3.c:22:26: optimized: loop vectorized using 16 byte vectors
+src/kernels_v3.c:22:26: optimized: loop vectorized using 8 byte vectors
+src/kernels_v3.c:19:6: note: vectorized 1 loops in function.
+src/kernels_v3.c:19:6: note: ***** Analysis failed with vector mode V4SF
+src/kernels_v3.c:19:6: note: ***** The result for vector mode V16QI would be the same
+src/kernels_v3.c:19:6: note: ***** Re-trying analysis with vector mode V8QI
+src/kernels_v3.c:19:6: note: ***** Analysis failed with vector mode V8QI
+src/kernels_v3.c:19:6: note: ***** Re-trying analysis with vector mode V4QI
+src/kernels_v3.c:19:6: note: ***** Analysis failed with vector mode V4QI
+src/kernels_v3.c:25:6: note: vectorized 0 loops in function.
+src/kernels_v3.c:27:41: missed: statement clobbers memory: __builtin_memcpy (y_10(D), x_9(D), _18);
+src/kernels_v3.c:28:1: note: ***** Analysis failed with vector mode VOID

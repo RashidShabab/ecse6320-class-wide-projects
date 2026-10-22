@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+*.swp
+*.swo
+bin/
+*.o
+# Raw data, processed results, compiler evidence and plots are intentional deliverables.
+
+# LaTeX build by-products
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc

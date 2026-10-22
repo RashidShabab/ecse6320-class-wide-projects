@@ -1,0 +1,30 @@
+{
+  "cpu": 0,
+  "trials": 3,
+  "cases": [
+    {
+      "study": "bandwidth",
+      "kernel": "copy",
+      "dtype": "float32",
+      "mode": "native",
+      "region": "80MB",
+      "n": 10000000,
+      "inner": 2,
+      "stride": 1,
+      "offset": 0,
+      "base_n": 0
+    },
+    {
+      "study": "bandwidth",
+      "kernel": "copy",
+      "dtype": "float32",
+      "mode": "native",
+      "region": "160MB",
+      "n": 20000000,
+      "inner": 2,
+      "stride": 1,
+      "offset": 0,
+      "base_n": 0
+    }
+  ]
+}

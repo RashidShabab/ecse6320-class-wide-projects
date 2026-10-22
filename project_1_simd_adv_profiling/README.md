@@ -12,6 +12,10 @@ ECSE 6320: Advanced Computer Systems. Profiles SAXPY, strict dot product and a t
 
 Existing measurements contain 528 benchmark processes and 10,560 timed intervals, with no recorded correctness failures. Actual hardware core-cycle measurements remain unavailable on the original WSL host; TSC ticks are labeled separately. See the report for variability and limitations.
 
+## AI use
+
+- [AI-use note](report/Report.md#17-ai-use-note)
+
 ## How to reproduce
 
 Use Linux/WSL on an x86-64 CPU supporting AVX2, FMA and RDTSCP, with GCC, binutils and Python 3. Run from this project directory. Select an available logical CPU if CPU 0 is unavailable.
@@ -82,6 +86,6 @@ The saved experiments used an Intel Core Ultra 7 265H, WSL2 Linux 6.6.87.2 and G
 
 The four C files keep their `_v3` names to match the recorded compiler evidence and source hashes.
 
-## AI use and limitations
+## Limitations
 
-See the AI-use note in the report. Review the methodology and findings before submission. Actual core-cycle data still needs a PMU-enabled host or instructor acceptance of the documented limitation. Reorganization does not resolve that requirement. Nothing has been pushed to GitHub.
+Actual hardware core cycles could not be measured: WSL does not expose the CPU's performance counters. TSC ticks per element are reported separately and are not presented as core cycles. See the Limitations section of the report for the full list.

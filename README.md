@@ -1,6 +1,6 @@
 # ECSE 6320 – Class-wide Projects
 
-Rashid Shabab · ECSE 4320/6320 Advanced Computer Systems, Fall 2026
+Rashid Shabab · ECSE 6320 Advanced Computer Systems, Fall 2026
 
 This repository holds my three class-wide projects. Each folder is self-contained, with
 its own source code, run scripts, raw and processed data, plotting scripts, figures,

@@ -1,5 +1,5 @@
 // pchase.c - pointer-chase memory latency / memory-level-parallelism benchmark
-// ECSE 4320/6320 Project 2: Cache & Memory Performance Profiling
+// ECSE 6320 Project 2: Cache & Memory Performance Profiling
 //
 // Each "node" sits `stride` bytes apart in one buffer and holds a pointer to the
 // next node. Walking the chain makes every load depend on the previous one, so

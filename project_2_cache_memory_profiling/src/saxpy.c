@@ -1,5 +1,5 @@
 // saxpy.c - cache-miss impact on a lightweight kernel: y[i] = a * x[i] + y[i]
-// ECSE 4320/6320 Project 2: Cache & Memory Performance Profiling
+// ECSE 6320 Project 2: Cache & Memory Performance Profiling
 //
 // Two float arrays x and y (total footprint = -s). Sweeping the footprint from
 // L1-sized to DRAM-sized changes where the data comes from, and therefore the

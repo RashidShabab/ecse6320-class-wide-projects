@@ -1,5 +1,5 @@
 // bwbench.c - memory bandwidth benchmark (stride, pattern, read/write mix, threads)
-// ECSE 4320/6320 Project 2: Cache & Memory Performance Profiling
+// ECSE 6320 Project 2: Cache & Memory Performance Profiling
 //
 // Unlike pchase, the accesses here are INDEPENDENT: the address of access i+1
 // does not depend on the data of access i. The CPU can therefore keep many

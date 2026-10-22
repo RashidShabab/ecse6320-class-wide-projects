@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-membench - run the ECSE 4320/6320 Project 2 cache & memory experiment matrix.
+membench - run the ECSE 6320 Project 2 cache & memory experiment matrix.
 
 Every point runs one of the two C benchmarks (src/pchase.c for latency,
 src/bwbench.c for bandwidth) and saves its CSV output, stderr log and the exact

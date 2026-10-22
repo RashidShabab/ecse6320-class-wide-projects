@@ -1,0 +1,151 @@
+{
+  "experiment": "mix",
+  "session": "20261021_002847",
+  "tag": "nj4",
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Read/write mix sweep (100/70/50/0 % reads), fixed block size, pattern and QD.",
+  "hypothesis": "Mixed workloads underperform the average of pure read and pure write.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "mix"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": true,
+    "bs": null,
+    "qd": [
+      16
+    ],
+    "numjobs": [
+      4
+    ],
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": "nj4",
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "mix",
+    "--qd",
+    "16",
+    "--numjobs",
+    "4",
+    "--shuffle",
+    "--tag",
+    "nj4"
+  ],
+  "runs": [
+    {
+      "job": "randrw_4k_read100_qd16_nj4",
+      "rep": 1,
+      "start": "2026-10-21T00:28:47.101439",
+      "end": "2026-10-21T00:29:23.774431",
+      "returncode": 0,
+      "output": "randrw_4k_read100_qd16_nj4_r1.json"
+    },
+    {
+      "job": "randrw_4k_read50_qd16_nj4",
+      "rep": 1,
+      "start": "2026-10-21T00:29:33.775529",
+      "end": "2026-10-21T00:30:10.422781",
+      "returncode": 0,
+      "output": "randrw_4k_read50_qd16_nj4_r1.json"
+    },
+    {
+      "job": "randrw_4k_read0_qd16_nj4",
+      "rep": 1,
+      "start": "2026-10-21T00:30:20.426405",
+      "end": "2026-10-21T00:30:57.054642",
+      "returncode": 0,
+      "output": "randrw_4k_read0_qd16_nj4_r1.json"
+    },
+    {
+      "job": "randrw_4k_read70_qd16_nj4",
+      "rep": 1,
+      "start": "2026-10-21T00:31:07.057783",
+      "end": "2026-10-21T00:31:43.647123",
+      "returncode": 0,
+      "output": "randrw_4k_read70_qd16_nj4_r1.json"
+    },
+    {
+      "job": "randrw_4k_read70_qd16_nj4",
+      "rep": 2,
+      "start": "2026-10-21T00:31:53.648719",
+      "end": "2026-10-21T00:32:30.251579",
+      "returncode": 0,
+      "output": "randrw_4k_read70_qd16_nj4_r2.json"
+    },
+    {
+      "job": "randrw_4k_read50_qd16_nj4",
+      "rep": 2,
+      "start": "2026-10-21T00:32:40.254792",
+      "end": "2026-10-21T00:33:16.881440",
+      "returncode": 0,
+      "output": "randrw_4k_read50_qd16_nj4_r2.json"
+    },
+    {
+      "job": "randrw_4k_read100_qd16_nj4",
+      "rep": 2,
+      "start": "2026-10-21T00:33:26.885108",
+      "end": "2026-10-21T00:34:03.439767",
+      "returncode": 0,
+      "output": "randrw_4k_read100_qd16_nj4_r2.json"
+    },
+    {
+      "job": "randrw_4k_read0_qd16_nj4",
+      "rep": 2,
+      "start": "2026-10-21T00:34:13.442898",
+      "end": "2026-10-21T00:34:50.123623",
+      "returncode": 0,
+      "output": "randrw_4k_read0_qd16_nj4_r2.json"
+    },
+    {
+      "job": "randrw_4k_read70_qd16_nj4",
+      "rep": 3,
+      "start": "2026-10-21T00:35:00.126662",
+      "end": "2026-10-21T00:35:36.807988",
+      "returncode": 0,
+      "output": "randrw_4k_read70_qd16_nj4_r3.json"
+    },
+    {
+      "job": "randrw_4k_read100_qd16_nj4",
+      "rep": 3,
+      "start": "2026-10-21T00:35:46.811541",
+      "end": "2026-10-21T00:36:23.460829",
+      "returncode": 0,
+      "output": "randrw_4k_read100_qd16_nj4_r3.json"
+    },
+    {
+      "job": "randrw_4k_read0_qd16_nj4",
+      "rep": 3,
+      "start": "2026-10-21T00:36:33.465145",
+      "end": "2026-10-21T00:37:10.034388",
+      "returncode": 0,
+      "output": "randrw_4k_read0_qd16_nj4_r3.json"
+    },
+    {
+      "job": "randrw_4k_read50_qd16_nj4",
+      "rep": 3,
+      "start": "2026-10-21T00:37:20.037691",
+      "end": "2026-10-21T00:37:56.728694",
+      "returncode": 0,
+      "output": "randrw_4k_read50_qd16_nj4_r3.json"
+    }
+  ]
+}

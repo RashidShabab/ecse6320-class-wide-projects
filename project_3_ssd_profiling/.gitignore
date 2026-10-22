@@ -1,0 +1,4 @@
+# never commit test data files
+testfile*
+*.tmp
+__pycache__/

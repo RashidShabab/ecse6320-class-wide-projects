@@ -1,0 +1,381 @@
+{
+  "experiment": "peak",
+  "session": "20261020_221415",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Maximum IOPS and throughput: QD x numjobs grid for 4 KiB random and 128 KiB sequential.",
+  "hypothesis": "One submitting thread cannot saturate the drive; several jobs are needed for peak IOPS.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "peak"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 3,
+    "cooldown": 10,
+    "shuffle": true,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "peak",
+    "--shuffle"
+  ],
+  "runs": [
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 1,
+      "start": "2026-10-20T22:14:15.645093",
+      "end": "2026-10-20T22:14:52.208994",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 1,
+      "start": "2026-10-20T22:15:02.211925",
+      "end": "2026-10-20T22:15:39.128176",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r1.json"
+    },
+    {
+      "job": "read_128k_qd8_nj1",
+      "rep": 1,
+      "start": "2026-10-20T22:15:49.131305",
+      "end": "2026-10-20T22:16:25.717873",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj1_r1.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj4",
+      "rep": 1,
+      "start": "2026-10-20T22:16:35.719602",
+      "end": "2026-10-20T22:17:12.283239",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj4_r1.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj2",
+      "rep": 1,
+      "start": "2026-10-20T22:17:22.286569",
+      "end": "2026-10-20T22:17:58.877804",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj2_r1.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj2",
+      "rep": 1,
+      "start": "2026-10-20T22:18:08.880537",
+      "end": "2026-10-20T22:18:45.416498",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj2_r1.json"
+    },
+    {
+      "job": "read_128k_qd32_nj1",
+      "rep": 1,
+      "start": "2026-10-20T22:18:55.419714",
+      "end": "2026-10-20T22:19:31.999154",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj1_r1.json"
+    },
+    {
+      "job": "read_128k_qd8_nj4",
+      "rep": 1,
+      "start": "2026-10-20T22:19:42.000115",
+      "end": "2026-10-20T22:20:18.567725",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj4_r1.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj8",
+      "rep": 1,
+      "start": "2026-10-20T22:20:28.570795",
+      "end": "2026-10-20T22:21:04.553523",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj8_r1.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj4",
+      "rep": 1,
+      "start": "2026-10-20T22:21:14.556913",
+      "end": "2026-10-20T22:21:51.180212",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj4_r1.json"
+    },
+    {
+      "job": "read_128k_qd32_nj4",
+      "rep": 1,
+      "start": "2026-10-20T22:22:01.183106",
+      "end": "2026-10-20T22:22:37.780358",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj4_r1.json"
+    },
+    {
+      "job": "read_128k_qd32_nj2",
+      "rep": 1,
+      "start": "2026-10-20T22:22:47.783083",
+      "end": "2026-10-20T22:23:24.370365",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj2_r1.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj8",
+      "rep": 1,
+      "start": "2026-10-20T22:23:34.373746",
+      "end": "2026-10-20T22:24:11.001313",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj8_r1.json"
+    },
+    {
+      "job": "read_128k_qd8_nj2",
+      "rep": 1,
+      "start": "2026-10-20T22:24:21.004455",
+      "end": "2026-10-20T22:24:57.543732",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj2_r1.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj2",
+      "rep": 2,
+      "start": "2026-10-20T22:25:07.546467",
+      "end": "2026-10-20T22:25:44.146136",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj2_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 2,
+      "start": "2026-10-20T22:25:54.148648",
+      "end": "2026-10-20T22:26:30.678914",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r2.json"
+    },
+    {
+      "job": "read_128k_qd32_nj4",
+      "rep": 2,
+      "start": "2026-10-20T22:26:40.680348",
+      "end": "2026-10-20T22:27:17.219601",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj4_r2.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj8",
+      "rep": 2,
+      "start": "2026-10-20T22:27:27.222956",
+      "end": "2026-10-20T22:28:03.878923",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj8_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj4",
+      "rep": 2,
+      "start": "2026-10-20T22:28:13.880721",
+      "end": "2026-10-20T22:28:50.521726",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj4_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj8",
+      "rep": 2,
+      "start": "2026-10-20T22:29:00.526995",
+      "end": "2026-10-20T22:29:37.188072",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj8_r2.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj4",
+      "rep": 2,
+      "start": "2026-10-20T22:29:47.190893",
+      "end": "2026-10-20T22:30:23.735365",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj4_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj2",
+      "rep": 2,
+      "start": "2026-10-20T22:30:33.738845",
+      "end": "2026-10-20T22:31:10.443673",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj2_r2.json"
+    },
+    {
+      "job": "read_128k_qd8_nj2",
+      "rep": 2,
+      "start": "2026-10-20T22:31:20.445075",
+      "end": "2026-10-20T22:31:57.188169",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj2_r2.json"
+    },
+    {
+      "job": "read_128k_qd8_nj1",
+      "rep": 2,
+      "start": "2026-10-20T22:32:07.190182",
+      "end": "2026-10-20T22:32:43.703136",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj1_r2.json"
+    },
+    {
+      "job": "read_128k_qd8_nj4",
+      "rep": 2,
+      "start": "2026-10-20T22:32:53.706397",
+      "end": "2026-10-20T22:33:30.344905",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj4_r2.json"
+    },
+    {
+      "job": "read_128k_qd32_nj1",
+      "rep": 2,
+      "start": "2026-10-20T22:33:40.347906",
+      "end": "2026-10-20T22:34:17.036252",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj1_r2.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 2,
+      "start": "2026-10-20T22:34:27.040345",
+      "end": "2026-10-20T22:35:03.628677",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r2.json"
+    },
+    {
+      "job": "read_128k_qd32_nj2",
+      "rep": 2,
+      "start": "2026-10-20T22:35:13.631697",
+      "end": "2026-10-20T22:35:50.203775",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj2_r2.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj8",
+      "rep": 3,
+      "start": "2026-10-20T22:36:00.207217",
+      "end": "2026-10-20T22:36:36.805616",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj8_r3.json"
+    },
+    {
+      "job": "read_128k_qd32_nj1",
+      "rep": 3,
+      "start": "2026-10-20T22:36:46.809101",
+      "end": "2026-10-20T22:37:23.389513",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj4",
+      "rep": 3,
+      "start": "2026-10-20T22:37:33.392731",
+      "end": "2026-10-20T22:38:09.953137",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj4_r3.json"
+    },
+    {
+      "job": "read_128k_qd32_nj2",
+      "rep": 3,
+      "start": "2026-10-20T22:38:19.955333",
+      "end": "2026-10-20T22:38:56.547917",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj2_r3.json"
+    },
+    {
+      "job": "read_128k_qd8_nj1",
+      "rep": 3,
+      "start": "2026-10-20T22:39:06.550629",
+      "end": "2026-10-20T22:39:43.150868",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj1",
+      "rep": 3,
+      "start": "2026-10-20T22:39:53.155485",
+      "end": "2026-10-20T22:40:29.769797",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj1_r3.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj4",
+      "rep": 3,
+      "start": "2026-10-20T22:40:39.772062",
+      "end": "2026-10-20T22:41:16.336424",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj4_r3.json"
+    },
+    {
+      "job": "read_128k_qd8_nj2",
+      "rep": 3,
+      "start": "2026-10-20T22:41:26.338353",
+      "end": "2026-10-20T22:42:02.916641",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj2_r3.json"
+    },
+    {
+      "job": "read_128k_qd8_nj4",
+      "rep": 3,
+      "start": "2026-10-20T22:42:12.919631",
+      "end": "2026-10-20T22:42:49.469186",
+      "returncode": 0,
+      "output": "read_128k_qd8_nj4_r3.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj2",
+      "rep": 3,
+      "start": "2026-10-20T22:42:59.471418",
+      "end": "2026-10-20T22:43:36.013219",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj2_r3.json"
+    },
+    {
+      "job": "read_128k_qd32_nj4",
+      "rep": 3,
+      "start": "2026-10-20T22:43:46.015224",
+      "end": "2026-10-20T22:44:22.566846",
+      "returncode": 0,
+      "output": "read_128k_qd32_nj4_r3.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj8",
+      "rep": 3,
+      "start": "2026-10-20T22:44:32.567986",
+      "end": "2026-10-20T22:45:08.255243",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj8_r3.json"
+    },
+    {
+      "job": "randread_4k_qd32_nj2",
+      "rep": 3,
+      "start": "2026-10-20T22:45:18.257705",
+      "end": "2026-10-20T22:45:54.835120",
+      "returncode": 0,
+      "output": "randread_4k_qd32_nj2_r3.json"
+    },
+    {
+      "job": "randread_4k_qd128_nj1",
+      "rep": 3,
+      "start": "2026-10-20T22:46:04.837751",
+      "end": "2026-10-20T22:46:41.383875",
+      "returncode": 0,
+      "output": "randread_4k_qd128_nj1_r3.json"
+    }
+  ]
+}

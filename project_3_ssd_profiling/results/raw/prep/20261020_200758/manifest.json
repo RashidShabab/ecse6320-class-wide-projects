@@ -1,0 +1,52 @@
+{
+  "experiment": "prep",
+  "session": "20261020_200758",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Fill the test file with sequential 1 MiB writes (required once before anything else).",
+  "hypothesis": "Burst sequential write of several GB/s; file is fully written so reads hit real flash.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "prep"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 30,
+    "ramp": 5,
+    "reps": 1,
+    "cooldown": 10,
+    "shuffle": false,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": false
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "prep"
+  ],
+  "runs": [
+    {
+      "job": "prep_seqwrite_1m",
+      "rep": 1,
+      "start": "2026-10-20T20:07:58.373550",
+      "end": "2026-10-20T20:08:12.247633",
+      "returncode": 0,
+      "output": "prep_seqwrite_1m_r1.json"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Captured 2026-10-20 11:17 (America/New_York) via PowerShell, non-admin session
+
+Admin rights          : False
+FIO                   : fio-3.43 (windowsaio engine)
+Machine               : LENOVO 21TES07S00 (laptop, on AC power)
+RAM                   : 64 GB (8 x 8 GB Samsung LPDDR5X, rated 8533, configured 7467 MT/s)
+CPU                   : Intel Core Ultra 7 265H, 16 cores / 16 threads (no SMT), base 2200 MHz
+OS                    : Windows 11 Education 10.0.26200 (build 26200)
+SSD                   : SAMSUNG MZVLC2T0HBLD-00BLL (Samsung PM9E1 OEM), 2 TB, NVMe
+SSD firmware          : 5L2QNXH7
+SSD health            : Healthy
+PCIe link (idle)      : current Gen4 x4, max Gen5 x4
+Volume C:             : NTFS, 2046 GB total, 1777 GB free
+Power plan            : High performance
+Defender exclusion    : NOT applied (requires admin)
+SMART / temperature   : not readable from PowerShell without admin (see CrystalDiskInfo)

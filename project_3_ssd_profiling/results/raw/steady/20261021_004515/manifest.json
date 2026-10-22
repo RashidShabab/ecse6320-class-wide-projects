@@ -1,0 +1,55 @@
+{
+  "experiment": "steady",
+  "session": "20261021_004515",
+  "tag": null,
+  "fio": "C:\\Program Files\\fio\\fio.EXE",
+  "fio_version": "fio-3.43",
+  "description": "Device state: long sustained write logged per second to expose SLC-cache exhaustion. WRITES A LOT OF DATA - not part of 'all'.",
+  "hypothesis": "Bandwidth drops sharply once the SLC cache fills, then settles at steady state.",
+  "knobs": {
+    "cmd": "run",
+    "experiments": [
+      "steady"
+    ],
+    "file": "C:\\fiotest\\testfile",
+    "size": "64G",
+    "fio": null,
+    "ioengine": "windowsaio",
+    "runtime": 240,
+    "ramp": 5,
+    "reps": 1,
+    "cooldown": 10,
+    "shuffle": false,
+    "bs": null,
+    "qd": null,
+    "numjobs": null,
+    "rw": null,
+    "mix": null,
+    "ranges": null,
+    "data": "incompressible",
+    "sanity_size": "1G",
+    "passes": 1,
+    "outdir": "C:\\rashid_wd\\ecse6320\\project_3_ssd_profiling\\results\\raw",
+    "tag": null,
+    "dry_run": false,
+    "yes": true
+  },
+  "argv": [
+    "scripts\\ssdbench.py",
+    "run",
+    "steady",
+    "--runtime",
+    "240",
+    "--yes"
+  ],
+  "runs": [
+    {
+      "job": "steady_write_128k_qd32_nj1",
+      "rep": 1,
+      "start": "2026-10-21T00:45:15.092066",
+      "end": "2026-10-21T00:49:15.782782",
+      "returncode": 0,
+      "output": "steady_write_128k_qd32_nj1_r1.json"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+; Fill the 64 GiB test file with incompressible data before any measurement.
+; Reads of never-written regions can be served without touching flash, so
+; every later test must run on a fully written file.
+[global]
+ioengine=windowsaio
+direct=1
+filename=C\:\fiotest\testfile
+size=64G
+refill_buffers=1
+buffer_compress_percentage=0
+
+[prep_seqwrite_1m]
+rw=write
+bs=1M
+iodepth=16

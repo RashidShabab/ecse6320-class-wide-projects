@@ -1,0 +1,25 @@
+; Pitfall demo: identical 4 KiB random reads over a small 1 GiB region,
+; once with direct I/O and once buffered. With 64 GB of RAM the buffered run
+; is served from the Windows file cache after warm-up and looks impossibly fast.
+[global]
+ioengine=windowsaio
+filename=C\:\fiotest\testfile
+size=1G
+rw=randread
+bs=4k
+iodepth=1
+numjobs=1
+time_based=1
+runtime=30
+ramp_time=10
+randrepeat=0
+lat_percentiles=1
+percentile_list=50:95:99:99.9
+
+[direct_4k_randread_qd1]
+direct=1
+stonewall
+
+[buffered_4k_randread_qd1]
+direct=0
+stonewall

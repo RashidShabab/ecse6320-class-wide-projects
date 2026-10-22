@@ -9,6 +9,7 @@ command under results/raw/<experiment>/<session>/, together with a manifest
 snapshot, so each result can be reproduced exactly.
 
 Run on the Linux test machine from the project folder, after `make`.
+Benchmarks: src/pchase.c (latency), src/bwbench.c (bandwidth), src/saxpy.c (cache-miss impact).
 """
 import argparse
 import datetime as dt
@@ -24,6 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PCHASE = ROOT / "pchase"
 BWBENCH = ROOT / "bwbench"
+SAXPY = ROOT / "saxpy"
 ENV_SCRIPT = ROOT / "scripts" / "env_capture.sh"
 PERF_HOME = Path.home() / "tools" / "perf"
 
@@ -134,6 +136,15 @@ def build_tlb(a):
     return pts
 
 
+def build_saxpy(a):
+    """Cache-miss impact: same SAXPY arithmetic, footprint from L1 to DRAM, seq vs rand order."""
+    pts = []
+    for size in pick(a.sizes, ["16K", "32K", "128K", "512K", "2M", "8M", "16M", "48M", "128M", "512M", "1G"]):
+        for p in ["seq", "rand"]:
+            pts.append(point(f"saxpy_{p}_{size}", "saxpy", ["-s", size, "-p", p, "-c", a.cpu, "-r", a.reps]))
+    return pts
+
+
 # name: (builder, default reps, description, hypothesis)
 EXPERIMENTS = {
     "sanity":   (build_sanity, 5,
@@ -170,8 +181,13 @@ EXPERIMENTS = {
                  "with dTLB counters.",
                  "With 4 KiB pages, latency and dTLB misses jump once pages exceed the TLB reach; "
                  "2 MiB pages remove most misses."),
+    "saxpy":    (build_saxpy, 5,
+                 "Cache-miss impact: SAXPY y = a*x + y, footprint 16 KiB-1 GiB, sequential (vectorized) vs "
+                 "shuffled-index order, with L1D / LLC / dTLB miss counters.",
+                 "Time per element tracks misses per element: flat while x and y fit in cache, rising with "
+                 "LLC misses; random order far slower at DRAM sizes."),
 }
-ORDER = ["sanity", "baseline", "ws", "pattern", "rw", "mlp", "loaded", "tlb"]
+ORDER = ["sanity", "baseline", "ws", "pattern", "rw", "mlp", "loaded", "tlb", "saxpy"]
 
 
 # --------------------------------------------------------------------------- #
@@ -200,7 +216,7 @@ def resolve(a, name):
 
 
 def run_point(p, outdir, perf):
-    tool = PCHASE if p["tool"] == "pchase" else BWBENCH
+    tool = {"pchase": PCHASE, "bwbench": BWBENCH, "saxpy": SAXPY}[p["tool"]]
     cmd = [str(tool), "-H"] + p["args"]
     env = None
     if p.get("perf"):
@@ -233,12 +249,15 @@ def quick_summary(path):
         ns = sorted(float(r["ns_per_load"]) for r in rows)
         cy = sorted(float(r["cycles_per_load"]) for r in rows)
         return f"  median {ns[len(ns) // 2]:.2f} ns/load, {cy[len(cy) // 2]:.1f} cycles/load"
+    if "ns_per_elem" in hdr:
+        ns = sorted(float(r["ns_per_elem"]) for r in rows)
+        return f"  median {ns[len(ns) // 2]:.3f} ns/element"
     gb = sorted(float(r["gb_per_s"]) for r in rows)
     return f"  median {gb[len(gb) // 2]:.2f} GB/s"
 
 
 def preflight():
-    missing = [t.name for t in (PCHASE, BWBENCH) if not t.exists()]
+    missing = [t.name for t in (PCHASE, BWBENCH, SAXPY) if not t.exists()]
     if missing:
         sys.exit(f"ERROR: {', '.join(missing)} not built. Run: make")
     if sys.platform != "linux":
@@ -261,7 +280,7 @@ def run(a):
         outdir = Path(a.outdir) / n / (session + (f"_{a.tag}" if a.tag else ""))
         if a.dry_run:
             for p in pts:
-                tool = "./pchase" if p["tool"] == "pchase" else "./bwbench"
+                tool = "./" + p["tool"]
                 pre = f"perf stat -e {','.join(p['perf'])} -- " if p.get("perf") else ""
                 bg = f"   [background: ./bwbench {' '.join(p['load'])}]" if p.get("load") else ""
                 print(f"{n}/{p['name']}: {pre}{tool} {' '.join(p['args'])}{bg}")
@@ -334,6 +353,7 @@ examples:
   membench.py run pattern rw --shuffle      pattern/stride and read/write mix sweeps
   membench.py run mlp loaded                intensity sweep (knee)
   membench.py run tlb sanity                TLB impact + pitfall demos
+  membench.py run saxpy                     cache-miss impact on a real kernel
   membench.py run ws --sizes 16K,1M,64M     override sizes
   membench.py run all --dry-run             print every command, run nothing
   membench.py parse                         build results/processed/summary*.csv

@@ -20,7 +20,9 @@ RAW = ROOT / "results" / "raw"
 OUT = ROOT / "results" / "processed"
 KEYS = ["size_bytes", "stride", "pattern", "chains", "pages", "cpu", "threads", "read_pct", "cpus", "load_threads"]
 METRICS = ["ns_per_load", "cycles_per_load", "lat_ns_per_chain", "eff_ghz", "mb_per_s",
-           "l1d_miss_per_load", "dtlb_miss_per_load", "gb_per_s", "bg_gb_per_s"]
+           "l1d_miss_per_load", "dtlb_miss_per_load", "gb_per_s", "bg_gb_per_s",
+           "ns_per_elem", "cycles_per_elem", "ipc", "gflops", "l1d_miss_per_elem", "llc_miss_per_elem",
+           "dtlb_miss_per_elem"]
 
 
 def read_csv(path):

@@ -2,7 +2,8 @@
 
 This project was completed for ECSE 6320: Advanced Computer Systems. It characterizes the cache and
 memory hierarchy of an AMD Ryzen 9 9950X (Zen 5) on CachyOS Linux, using two purpose-built C
-benchmarks in place of Intel MLC: a pointer-chase latency benchmark and a streaming bandwidth benchmark.
+benchmarks in place of Intel MLC (a pointer-chase latency benchmark and a streaming bandwidth benchmark),
+plus a SAXPY kernel for the cache-miss impact study.
 Full environment: `env/` and the `env.txt` saved with every result session.
 
 ## Report
@@ -18,7 +19,7 @@ Full environment: `env/` and the `env.txt` saved with every result session.
 On the Linux test machine, from this folder (Python 3 standard library only; plots need matplotlib):
 
 ```bash
-make                                  # builds ./pchase (-O2) and ./bwbench (-O3), -march=native
+make                                  # builds ./pchase (-O2), ./bwbench and ./saxpy (-O3), -march=native
 make check-asm                        # 1-chain loop must be a bare `mov (%rax),%rax`
 python3 scripts/membench.py --help    # commands; 'run --help' lists every knob
 python3 scripts/membench.py list      # experiments and hypotheses
@@ -29,10 +30,11 @@ python3 scripts/membench.py run ws
 python3 scripts/membench.py run pattern rw --shuffle
 python3 scripts/membench.py run mlp loaded
 python3 scripts/membench.py run tlb --shuffle
+python3 scripts/membench.py run saxpy
 
 python3 scripts/membench.py parse     # -> results/processed/*.csv
 python3 -m pip install --user matplotlib
-cd analysis && python3 plot_ws.py && python3 plot_sweeps.py && python3 plot_intensity.py
+cd analysis && python3 plot_ws.py && python3 plot_sweeps.py && python3 plot_intensity.py && python3 plot_saxpy.py
 ```
 
 Run long sessions inside `tmux`, with no other users on the machine (`who`, `uptime`).
@@ -68,13 +70,14 @@ Run long sessions inside `tmux`, with no other users on the machine (`who`, `upt
 |---|---|
 | `src/pchase.c` | Pointer-chase benchmark: latency, memory-level parallelism (k chains), page-size control, in-process cycle / L1D / dTLB counters, chain self-validation |
 | `src/bwbench.c` | Bandwidth benchmark: 64 B chunks, stride, seq/rand order, read/write mix, pinned threads |
+| `src/saxpy.c` | SAXPY `y = a·x + y`: footprint sweep, sequential (vectorized) or shuffled-index order, in-process cycles / instructions / L1D / LLC / dTLB counters, validated against a scalar reference |
 | `src/chase_kernels.h` | Generated chase loops, one per chain count (`scripts/gen_kernels.py`) |
 | `scripts/membench.py` | Runs every experiment (`list`, `run`, `env`, `parse`; see `--help`). Saves commands, output and manifests |
 | `scripts/env_capture.sh` | Records CPU, caches, topology, governor, THP, SMT, load, tool versions |
 | `results/raw/<experiment>/<session>/` | One CSV per point (`<point>.csv`), stderr log (`<point>.log`), background-load output for `loaded` (`<point>_load.csv`), `env.txt`, `manifest.json` (commands, knobs, hypothesis, versions, timestamps) |
 | `results/processed/summary.csv` | One row per repetition |
 | `results/processed/summary_agg.csv` | n, median, mean, std, min, max per point (median + min–max used for error bars) |
-| `results/processed/baseline.md`, `sanity.md` | Baseline and pitfall-demo tables |
+| `results/processed/baseline.md`, `sanity.md`, `saxpy.md` | Baseline, pitfall-demo and SAXPY tables (SAXPY includes miss/runtime correlations) |
 | `analysis/` | Parser and plotting scripts (below) |
 | `figures/` | All plots |
 | `env/` | System snapshots |
@@ -95,6 +98,7 @@ working set; repetitions are in-process.
 | `mlp` | 1 thread, 1–64 independent chains at 1 GiB: bandwidth vs per-load latency | Linear rise, then knee at the core's miss-handling limit | *pending* |
 | `loaded` | One chain's latency while 0–14 other cores stream reads | Flat until near peak bandwidth, then sharp rise | *pending* |
 | `tlb` | One access per 4 KiB page, 4 MiB–1 GiB, 4 KiB vs 2 MiB pages, dTLB misses | 4 KiB pages: misses and latency jump past TLB reach | *pending* |
+| `saxpy` | SAXPY time per element, 16 KiB–1 GiB footprint, sequential vs random order, with miss counters | Time tracks misses per element; random far slower at DRAM sizes | *pending* |
 
 ## Benchmarks
 
@@ -146,6 +150,9 @@ The random pattern also reads a 4 B index per chunk (~6 % extra at 64 B stride).
 | `plot_intensity.py` | `mlp_tradeoff.png` | Throughput vs latency as loads in flight grow (knee) |
 | | `mlp_littles.png` | Little's Law: measured outstanding misses vs k |
 | | `loaded_latency.png` | Latency vs background bandwidth |
+| `plot_saxpy.py` | `saxpy_runtime.png` | SAXPY time per element vs footprint, seq vs random |
+| | `saxpy_misses.png` | Time per element vs LLC misses per element |
+| | `results/processed/saxpy.md` | Table + Pearson correlation of time with L1D / LLC misses |
 
 ## Design notes and pitfalls caught
 

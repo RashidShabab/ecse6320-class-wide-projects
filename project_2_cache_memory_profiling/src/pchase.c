@@ -123,7 +123,8 @@ static chase_fn pick_kernel(int k) {
         case 1: return chase_1;   case 2: return chase_2;   case 4: return chase_4;
         case 6: return chase_6;   case 8: return chase_8;   case 10: return chase_10;
         case 12: return chase_12; case 16: return chase_16; case 20: return chase_20;
-        case 24: return chase_24; case 32: return chase_32;
+        case 24: return chase_24; case 32: return chase_32; case 40: return chase_40;
+        case 48: return chase_48; case 64: return chase_64;
         default: return NULL;
     }
 }
@@ -141,7 +142,7 @@ static void usage(const char *prog) {
         "  -s SIZE     working-set size, e.g. 32K, 1M, 512M (required)\n"
         "  -S BYTES    stride between nodes (default 64; use 4096 for one node per page)\n"
         "  -p PATTERN  rand | seq (default rand)\n"
-        "  -k K        independent chains: 1,2,4,6,8,10,12,16,20,24,32 (default 1)\n"
+        "  -k K        independent chains: 1,2,4,6,8,10,12,16,20,24,32,40,48,64 (default 1)\n"
         "  -P PAGES    thp | 4k | huge  (thp = system default, 4k = MADV_NOHUGEPAGE,\n"
         "              huge = MADV_HUGEPAGE; default huge)\n"
         "  -c CPU      pin to this CPU (default 2; -1 = no pinning)\n"
@@ -218,7 +219,7 @@ int main(int argc, char **argv) {
             uint32_t t = order[i]; order[i] = order[j]; order[j] = t;
         }
     // chain c = order[c*seg .. (c+1)*seg-1], closed into a cycle
-    void *heads[32];
+    void *heads[64];
     for (int c = 0; c < k; c++) {
         uint64_t b = (uint64_t)c * seg;
         for (uint64_t i = 0; i < seg; i++) {

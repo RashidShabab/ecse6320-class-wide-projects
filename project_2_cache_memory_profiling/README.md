@@ -92,7 +92,7 @@ working set; repetitions are in-process.
 | `ws` | Latency vs working set, 4 KiB–1 GiB, 37 sizes | Plateaus with steps past 48 KiB, 1 MiB, 32 MiB | *pending* |
 | `pattern` | Seq vs rand × 64/256/1024 B stride at 1 GiB: latency + 1-thread bandwidth | Seq ≫ rand at 64 B; gap shrinks as stride grows | *pending* |
 | `rw` | Bandwidth at 100/70/50/0 % reads, 1 and 16 threads | Bandwidth falls as write share rises | *pending* |
-| `mlp` | 1 thread, 1–32 independent chains at 1 GiB: bandwidth vs per-load latency | Linear rise, then knee at the core's miss-handling limit | *pending* |
+| `mlp` | 1 thread, 1–64 independent chains at 1 GiB: bandwidth vs per-load latency | Linear rise, then knee at the core's miss-handling limit | *pending* |
 | `loaded` | One chain's latency while 0–14 other cores stream reads | Flat until near peak bandwidth, then sharp rise | *pending* |
 | `tlb` | One access per 4 KiB page, 4 MiB–1 GiB, 4 KiB vs 2 MiB pages, dTLB misses | 4 KiB pages: misses and latency jump past TLB reach | *pending* |
 
@@ -108,7 +108,7 @@ load is the latency. Nodes are linked in a shuffled order so the prefetcher cann
 | `-s SIZE` | Working-set size (`32K`, `1M`, `1G`) | required |
 | `-S BYTES` | Node spacing; `4096` = one node per page | 64 |
 | `-p rand\|seq` | Visiting order | rand |
-| `-k K` | Independent chains (1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 32) | 1 |
+| `-k K` | Independent chains (1–32, 40, 48, 64) | 1 |
 | `-P thp\|4k\|huge` | System default / `MADV_NOHUGEPAGE` / `MADV_HUGEPAGE` | huge |
 | `-c CPU`, `-r REPS`, `-n LOADS`, `-w MS`, `-x SEED`, `-H` | Pin CPU, repetitions, loads per rep, warm-up, seed, header | 2, 5, max(nodes, 10M), 200, fixed |
 

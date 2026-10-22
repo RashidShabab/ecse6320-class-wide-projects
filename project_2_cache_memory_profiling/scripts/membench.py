@@ -107,7 +107,7 @@ def build_mlp(a):
     size = pick(a.sizes, ["1G"])[0]
     return [point(f"mlp_k{k}", "pchase", ["-s", size, "-k", k, "-p", "rand", "-c", a.cpu,
                                          "-r", a.reps, "-n", "20M"])
-            for k in pick(a.chains, [1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 32])]
+            for k in pick(a.chains, [1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64])]
 
 
 def build_loaded(a):
@@ -157,7 +157,7 @@ EXPERIMENTS = {
                  "Read/write mix sweep: 100/70/50/0 % reads, sequential 64 B, 1 GiB, 1 and 16 threads.",
                  "Bandwidth falls as the write share rises (read-for-ownership and write-back traffic)."),
     "mlp":      (build_mlp, 5,
-                 "Intensity sweep part 1: 1 thread with 1-32 independent pointer chains (memory-level "
+                 "Intensity sweep part 1: 1 thread with 1-64 independent pointer chains (memory-level "
                  "parallelism) at 1 GiB.",
                  "Throughput rises ~linearly with chains, then flattens at the core's miss-handling "
                  "limit while per-chain latency rises (the knee)."),
